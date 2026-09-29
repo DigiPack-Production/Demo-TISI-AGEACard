@@ -108,8 +108,7 @@
                         <span class="h-hero__cta-main">亞運菁英運動員</span>
                         <span class="h-hero__cta-sub">收藏卡包</span>
                     </p>
-                    <!-- 抽卡功能與專屬過場動畫另行製作，目前僅展示 -->
-                    <span class="h-hero__cta-btn">點我抽卡</span>
+                    <button class="h-hero__cta-btn" id="draw-btn" type="button" aria-haspopup="dialog" aria-controls="h-open">點我抽卡</button>
                 </div>
 
                 <div class="h-hero__pack h-in h-in--pack h-seq" aria-hidden="true">
@@ -347,6 +346,42 @@
             <span class="h-menu__site-zh">亞運菁英運動員卡</span>
             <span class="h-menu__site-en">ASIAN GAMES ELITE ATHLETE CARD</span>
         </p>
+    </div>
+
+    <!-- ================= 抽卡過場（Figma 動畫 368:2441「15」）：影片播到卡包停住，拖曳剪刀剪開後播完，卡片飄到運動員頁 ================= -->
+    <div class="h-open" id="h-open" role="dialog" aria-modal="true" aria-label="抽卡" hidden>
+        <div class="h-open__stage">
+            <div class="h-open__grid" aria-hidden="true"></div>
+            <div class="h-open__line h-open__line--top" aria-hidden="true"></div>
+            <div class="h-open__line h-open__line--bottom" aria-hidden="true"></div>
+            <div class="h-open__line h-open__line--left" aria-hidden="true"></div>
+            <div class="h-open__line h-open__line--right" aria-hidden="true"></div>
+            <img class="h-open__star h-open__star--tl" src="assets/home/star-sm.svg" alt="" width="11" height="11" />
+            <img class="h-open__star h-open__star--tr" src="assets/home/star.svg" alt="" width="21" height="21" />
+            <img class="h-open__star h-open__star--bl" src="assets/home/star.svg" alt="" width="21" height="21" />
+            <img class="h-open__star h-open__star--br" src="assets/home/star.svg" alt="" width="21" height="21" />
+
+            <p class="h-open__title h-open__title--one"><span class="h-open__en"><span>ONE</span><span>TEAM</span></span><span class="h-open__zh">前進亞運</span></p>
+            <p class="h-open__title h-open__title--step"><span class="h-open__en"><span>STEP</span><span>IN</span></span><span class="h-open__zh">一起上場</span></p>
+
+            <!-- 影片來源由 js/home.js 設定：透明背景 webm；Safari 改用黑底 mp4 + screen 疊加 -->
+            <video class="h-open__video" id="h-open-video" muted playsinline preload="none" aria-hidden="true"></video>
+            <img class="h-open__logo" src="assets/draw/site-logo.png" alt="亞運菁英運動員卡 ASIAN GAMES ELITE ATHLETE CARD" width="562" height="76" />
+
+            <p class="h-open__loading" id="h-open-loading" role="status">載入中</p>
+
+            <!-- 剪刀裁線提示：影片停住後出現；按住剪刀沿虛線由左往右拖曳＝拖曳影片進度 -->
+            <div class="h-open__cut" id="h-open-cut">
+                <p class="h-open__hint">滑動剪開卡包</p>
+                <div class="h-open__dash" id="h-open-dash" aria-hidden="true"></div>
+                <button class="h-open__scissors" id="h-open-scissors" type="button" aria-label="剪開卡包">
+                    <img src="assets/draw/scissors.svg" alt="" width="60" height="60" />
+                </button>
+            </div>
+        </div>
+        <button class="h-menu__close h-open__close" id="h-open-close" type="button" aria-label="關閉抽卡">
+            <span></span><span></span>
+        </button>
     </div>
 
     <!-- 一般 script（非 module），雙擊以 file:// 開啟也能執行 -->
