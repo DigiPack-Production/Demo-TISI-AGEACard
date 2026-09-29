@@ -1,0 +1,99 @@
+/*
+  亞運菁英運動員卡片展示 — 轉場換頁特效（兩頁共用，搭配 js/transition.js）
+  裁切框從全畫面縮至中心、再從中心展開到下一頁；
+  四條虛線跟著框邊移動並延伸到畫面邊界。框的位置由 JS 以 --t/--r/--b/--l 設定。
+*/
+
+:root {
+  --pt-grid-line: rgba(255, 255, 255, 0.1);
+  --pt-line: #e95622;
+}
+
+/* 轉場中框外露出黑底網格 */
+html.is-transitioning body,
+html.pt-entering body {
+  background-color: #000;
+  background-image:
+    linear-gradient(to right, var(--pt-grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--pt-grid-line) 1px, transparent 1px);
+  background-size: 40px 40px;
+  background-attachment: fixed;
+}
+
+/* 換頁進場：JS 接手前先把頁面收合，避免閃現 */
+html.pt-entering #site {
+  clip-path: inset(50% 50%);
+}
+
+.page-transition {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  --t: 0px;
+  --r: 0px;
+  --b: 0px;
+  --l: 0px;
+}
+
+.page-transition[hidden] {
+  display: none;
+}
+
+.page-transition__line {
+  position: absolute;
+  pointer-events: none;
+}
+
+.page-transition__line--top,
+.page-transition__line--bottom {
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: url("../assets/line-h.svg") repeat-x;
+}
+
+.page-transition__line--top {
+  top: calc(var(--t) - 1px);
+}
+
+.page-transition__line--bottom {
+  top: calc(100% - var(--b) - 1px);
+}
+
+.page-transition__line--left,
+.page-transition__line--right {
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: repeating-linear-gradient(to bottom, var(--pt-line) 0 4px, transparent 4px 8px);
+}
+
+.page-transition__line--left {
+  left: calc(var(--l) - 1px);
+}
+
+.page-transition__line--right {
+  left: calc(100% - var(--r) - 1px);
+}
+
+/* 轉場時飄移的卡片分身：不被裁切框覆蓋 */
+.fly-card {
+  position: fixed;
+  z-index: 2100;
+  pointer-events: none;
+  border-radius: 4.55% / 3.5%;
+  overflow: hidden;
+  box-shadow:
+    0 0 3px -1px white,
+    0 0 12px 2px hsl(47, 100%, 78%),
+    0px 10px 20px -5px black,
+    0 0 50px -20px hsl(47, 100%, 78%);
+  will-change: left, top, width, height, transform;
+}
+
+.fly-card img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

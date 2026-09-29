@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>亞運菁英運動員卡片展示</title>
+
+    <!-- 卡片特效：B1（poke-holo 原版）完整 CSS，全部保留載入，順序同原版 -->
+    <link rel="stylesheet" href="css/cards/base.css" />
+    <link rel="stylesheet" href="css/cards.css" />
+    <link rel="stylesheet" href="css/cards/basic.css" />
+    <link rel="stylesheet" href="css/cards/reverse-holo.css" />
+    <link rel="stylesheet" href="css/cards/regular-holo.css" />
+    <link rel="stylesheet" href="css/cards/cosmos-holo.css" />
+    <link rel="stylesheet" href="css/cards/amazing-rare.css" />
+    <link rel="stylesheet" href="css/cards/radiant-holo.css" />
+    <link rel="stylesheet" href="css/cards/v-regular.css" />
+    <link rel="stylesheet" href="css/cards/v-full-art.css" />
+    <link rel="stylesheet" href="css/cards/v-max.css" />
+    <link rel="stylesheet" href="css/cards/v-star.css" />
+    <link rel="stylesheet" href="css/cards/trainer-full-art.css" />
+    <link rel="stylesheet" href="css/cards/rainbow-holo.css" />
+    <link rel="stylesheet" href="css/cards/rainbow-alt.css" />
+    <link rel="stylesheet" href="css/cards/secret-rare.css" />
+    <link rel="stylesheet" href="css/cards/trainer-gallery-holo.css" />
+    <link rel="stylesheet" href="css/cards/trainer-gallery-v-regular.css" />
+    <link rel="stylesheet" href="css/cards/trainer-gallery-v-max.css" />
+    <link rel="stylesheet" href="css/cards/trainer-gallery-secret-rare.css" />
+    <link rel="stylesheet" href="css/cards/shiny-rare.css" />
+    <link rel="stylesheet" href="css/cards/shiny-v.css" />
+    <link rel="stylesheet" href="css/cards/shiny-vmax.css" />
+    <link rel="stylesheet" href="css/cards/swsh-pikachu.css" />
+
+    <!-- 字型（連網時載入；離線時退回系統字型） -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400&family=Noto+Sans+TC:wght@400;700;900&display=swap" />
+
+    <!-- 本頁版面、轉場 -->
+    <link rel="stylesheet" href="css/page.css" />
+    <link rel="stylesheet" href="css/transition.css" />
+
+    <!-- 換頁進場：由其他頁轉場過來時，先收合頁面等 JS 展開 -->
+    <script>
+        if (/[?&]pt=1(&|$)/.test(location.search)) document.documentElement.classList.add("pt-entering");
+    </script>
+</head>
+<body>
+    <div class="site" id="site">
+    <div class="page">
+
+        <!-- ================= 主視覺 ================= -->
+        <header class="hero">
+            <div class="hero__stage">
+                <div class="hero__grid" aria-hidden="true"></div>
+                <img class="hero__ellipse hero__ellipse--1" src="assets/ellipse-lg.svg" alt="" width="443" height="443" />
+                <img class="hero__ellipse hero__ellipse--2" src="assets/ellipse-lg.svg" alt="" width="443" height="443" />
+                <img class="hero__ellipse hero__ellipse--3" src="assets/ellipse-sm.svg" alt="" width="235" height="235" />
+                <img class="hero__ellipse hero__ellipse--4" src="assets/ellipse-sm.svg" alt="" width="235" height="235" />
+                <div class="hero__line-top" aria-hidden="true"></div>
+
+                <div class="hero__deck" aria-hidden="true">
+                    <div class="hero__card">
+                        <img src="images/林郁婷.png" alt="" />
+                        <img class="hero__card-mesh" src="assets/hero-card-mesh.png" alt="" />
+                    </div>
+                    <div class="hero__pack">
+                        <div class="hero__pack-inner">
+                            <img src="assets/card-pack.png" alt="" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hero__content">
+                    <h1 class="hero__title">
+                        <span class="hero__title-year">2026</span>
+                        <span class="hero__title-main">亞運菁英運動員</span>
+                        <span class="hero__title-sub">收藏卡包</span>
+                    </h1>
+
+                    <div class="hero__logos">
+                        <div class="logo-mos" role="img" aria-label="運動部 Ministry of Sports">
+                            <img class="logo-mos__g9" src="assets/mos-g9.svg" alt="" />
+                            <img class="logo-mos__g24" src="assets/mos-g24.svg" alt="" />
+                            <img class="logo-mos__g27" src="assets/mos-g27.svg" alt="" />
+                        </div>
+                        <div class="logo-ctoc">
+                            <img src="assets/ctoc-emblem.png" alt="" />
+                            <div class="logo-ctoc__text">
+                                <span class="logo-ctoc__zh">中華奧林匹克委員會</span>
+                                <span class="logo-ctoc__en">Chinese Taipei Olympic Committee</span>
+                            </div>
+                        </div>
+                        <img class="logo-tisi" src="assets/tisi-logo.svg" alt="國家運動產業發展中心 Taiwan Institute of Sports Industry" />
+                    </div>
+
+                    <div class="hero__actions">
+                        <div class="sort">
+                            <button class="pill-btn pill-btn--sort" id="sort-btn" type="button" aria-haspopup="listbox" aria-expanded="false" aria-controls="sort-list">
+                                <span id="sort-label">使用運動類別排序</span>
+                                <img class="pill-btn__chevron" src="assets/icon-chevron.svg" alt="" width="18" height="28" />
+                            </button>
+                            <ul class="sort__list" id="sort-list" role="listbox" aria-label="運動類別" hidden></ul>
+                        </div>
+                        <button class="pill-btn pill-btn--search" id="search-btn" type="button" aria-haspopup="dialog">
+                            <span>搜尋</span>
+                            <img src="assets/icon-search.svg" alt="" width="32" height="32" />
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- 頁面裝飾虛線：放在卡片區之前，放大的卡片才會蓋在虛線上 -->
+        <div class="page__line page__line--h" aria-hidden="true"></div>
+        <div class="page__line page__line--v" aria-hidden="true"></div>
+
+        <!-- ================= 卡片區 ================= -->
+        <section class="cards-section" aria-label="運動員卡片">
+            <div class="cards-section__grid-bg" aria-hidden="true"></div>
+            <div class="cards-panel">
+                <main class="card-grid" id="card-grid"></main>
+                <p class="cards-empty" id="cards-empty" hidden>查無符合的選手</p>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- ================= 頁尾（展示用，項目不可點擊） ================= -->
+    <footer class="footer">
+        <div class="footer__top">
+            <div class="footer__brand">
+                <div class="footer__logos">
+                    <div class="footer__logo-row">
+                        <div class="logo-mos logo-mos--footer" role="img" aria-label="運動部 Ministry of Sports">
+                            <img class="logo-mos__g9" src="assets/footer-mos-g9.svg" alt="" />
+                            <img class="logo-mos__g24" src="assets/footer-mos-g24.svg" alt="" />
+                            <img class="logo-mos__g27" src="assets/footer-mos-g27.svg" alt="" />
+                        </div>
+                        <div class="logo-ctoc logo-ctoc--footer">
+                            <img src="assets/ctoc-emblem.png" alt="" />
+                            <div class="logo-ctoc__text">
+                                <span class="logo-ctoc__zh">中華奧林匹克委員會</span>
+                                <span class="logo-ctoc__en">Chinese Taipei Olympic Committee</span>
+                            </div>
+                        </div>
+                    </div>
+                    <img class="logo-tisi logo-tisi--footer" src="assets/footer-tisi-logo.svg" alt="國家運動產業發展中心 Taiwan Institute of Sports Industry" />
+                </div>
+                <div class="footer__site">
+                    <span class="footer__site-zh">亞運精英運動員卡</span>
+                    <span class="footer__site-en">ASIAN GAMES ELITE ATHLETE CARD</span>
+                </div>
+            </div>
+            <nav class="footer__col" aria-label="網站地圖">
+                <h2 class="footer__heading">網站地圖</h2>
+                <ul class="footer__links">
+                    <li>最新消息</li>
+                    <li>關於運動員卡</li>
+                    <li>運動員</li>
+                    <li>如何購買</li>
+                </ul>
+            </nav>
+            <nav class="footer__col" aria-label="使用協助">
+                <h2 class="footer__heading">使用協助</h2>
+                <ul class="footer__links">
+                    <li>感應教學</li>
+                    <li>常見問題</li>
+                    <li>無障礙宣告</li>
+                    <li>隱私權政策</li>
+                </ul>
+            </nav>
+        </div>
+        <div class="footer__bottom">
+            <img class="footer__badge" src="assets/accessibility-aa.png" alt="無障礙標章 2.1 AA" width="160" height="56" />
+            <p class="footer__copy">© 2026 國家運動產業發展中心&nbsp;&nbsp;|&nbsp; Design by.數位方塊　本網站已通過無障礙網頁 AA 等級檢測</p>
+        </div>
+    </footer>
+    </div>
+
+    <!-- 卡片放大時顯示：前往運動員專屬頁面 -->
+    <button class="view-profile" id="view-profile" type="button" hidden>
+        <span>查看資料</span>
+        <img src="assets/icon-chevron.svg" alt="" width="18" height="28" />
+    </button>
+
+    <!-- ================= 搜尋彈窗 ================= -->
+    <div class="search-modal" id="search-modal" role="dialog" aria-modal="true" aria-labelledby="search-title" hidden>
+        <div class="search-modal__inner">
+        <div class="search-modal__panel">
+            <div class="search-modal__line search-modal__line--top" aria-hidden="true"></div>
+            <div class="search-modal__line search-modal__line--header" aria-hidden="true"></div>
+            <div class="search-modal__line search-modal__line--left" aria-hidden="true"></div>
+            <button class="search-modal__close" id="search-close" type="button" aria-label="關閉搜尋">
+                <span></span><span></span>
+            </button>
+            <div class="search-modal__header">
+                <h2 id="search-title">搜尋</h2>
+            </div>
+            <form class="search-field" id="search-form" role="search">
+                <input id="search-input" type="search" placeholder="使用選手名稱搜尋" aria-label="使用選手名稱搜尋" autocomplete="off" />
+                <button type="submit" aria-label="搜尋">
+                    <img src="assets/icon-search-sm.svg" alt="" width="24" height="24" />
+                </button>
+            </form>
+            <h3 class="search-modal__subtitle">運動類別</h3>
+            <div class="sport-chips" id="sport-chips"></div>
+        </div>
+        </div>
+    </div>
+
+    <!-- 一般 script（非 module），雙擊以 file:// 開啟也能執行 -->
+    <script src="js/cards.js"></script>
+    <script src="js/transition.js"></script>
+    <script src="js/page.js"></script>
+</body>
+</html>

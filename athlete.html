@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>林郁婷｜亞運精英運動員卡</title>
+
+    <!-- 換頁進場：由首頁轉場過來時，先收合頁面等 JS 展開 -->
+    <script>
+        if (/[?&]pt=1(&|$)/.test(location.search)) document.documentElement.classList.add("pt-entering");
+        // 資料由下而上漸入（減少動態效果時不隱藏）
+        if (!matchMedia("(prefers-reduced-motion: reduce)").matches) document.documentElement.classList.add("js-reveal");
+    </script>
+
+    <!-- 卡片特效：與首頁相同的原版 CSS -->
+    <link rel="stylesheet" href="css/cards/base.css" />
+    <link rel="stylesheet" href="css/cards.css" />
+    <link rel="stylesheet" href="css/cards/basic.css" />
+    <link rel="stylesheet" href="css/cards/reverse-holo.css" />
+    <link rel="stylesheet" href="css/cards/regular-holo.css" />
+    <link rel="stylesheet" href="css/cards/cosmos-holo.css" />
+    <link rel="stylesheet" href="css/cards/amazing-rare.css" />
+    <link rel="stylesheet" href="css/cards/radiant-holo.css" />
+    <link rel="stylesheet" href="css/cards/v-regular.css" />
+    <link rel="stylesheet" href="css/cards/v-full-art.css" />
+    <link rel="stylesheet" href="css/cards/v-max.css" />
+    <link rel="stylesheet" href="css/cards/v-star.css" />
+    <link rel="stylesheet" href="css/cards/trainer-full-art.css" />
+    <link rel="stylesheet" href="css/cards/rainbow-holo.css" />
+    <link rel="stylesheet" href="css/cards/rainbow-alt.css" />
+    <link rel="stylesheet" href="css/cards/secret-rare.css" />
+    <link rel="stylesheet" href="css/cards/trainer-gallery-holo.css" />
+    <link rel="stylesheet" href="css/cards/trainer-gallery-v-regular.css" />
+    <link rel="stylesheet" href="css/cards/trainer-gallery-v-max.css" />
+    <link rel="stylesheet" href="css/cards/trainer-gallery-secret-rare.css" />
+    <link rel="stylesheet" href="css/cards/shiny-rare.css" />
+    <link rel="stylesheet" href="css/cards/shiny-v.css" />
+    <link rel="stylesheet" href="css/cards/shiny-vmax.css" />
+    <link rel="stylesheet" href="css/cards/swsh-pikachu.css" />
+
+    <!-- 字型（連網時載入；離線時退回系統字型） -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=IBM+Plex+Sans+Condensed&family=Inter:wght@400&family=Jockey+One&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" />
+
+    <!-- 共用元件（頁尾、logo）、轉場、本頁版面 -->
+    <link rel="stylesheet" href="css/page.css" />
+    <link rel="stylesheet" href="css/transition.css" />
+    <link rel="stylesheet" href="css/athlete.css" />
+</head>
+<body class="athlete-body">
+    <div class="site" id="site">
+
+        <!-- ================= 導覽列（展示用；logo 與「關於運動員卡」可點） ================= -->
+        <header class="a-nav">
+            <div class="a-nav__inner">
+                <a class="a-nav__brand" href="index.html" data-transition aria-label="回到亞運精英運動員卡首頁">
+                    <img class="a-nav__logo" src="assets/athlete/nav-tisi-icon.svg" alt="國家運動產業發展中心" width="83" height="38" />
+                    <div class="a-nav__site">
+                        <span class="a-nav__site-zh"><img src="assets/ctoc-emblem.png" alt="" width="23" height="23" />亞運精英運動員卡</span>
+                        <span class="a-nav__site-en">ASIAN GAMES ELITE ATHLETE CARD</span>
+                    </div>
+                </a>
+                <nav class="a-nav__links" aria-label="主選單">
+                    <span>最新消息</span>
+                    <a href="index.html" data-transition>關於運動員卡</a>
+                    <span>運動員</span>
+                    <span>如何購買</span>
+                </nav>
+                <div class="a-nav__search" aria-hidden="true">
+                    <span>搜尋</span>
+                    <img src="assets/icon-search-sm.svg" alt="" width="20" height="20" />
+                </div>
+                <div class="a-nav__burger" aria-hidden="true"><span></span><span></span><span></span></div>
+            </div>
+        </header>
+
+        <!-- ================= 主視覺 ================= -->
+        <section class="a-hero">
+            <div class="a-hero__bg-wrap"><img class="a-hero__bg" src="assets/athlete/hero-bg.png" alt="" /></div>
+            <div class="a-hero__inner">
+                <div class="a-hero__intro">
+                    <p class="a-hero__tag reveal" style="--d: 0">
+                        <span class="a-square"></span>
+                        <span class="a-hero__tag-en">BOXING</span>
+                        <span class="a-hero__tag-zh">拳擊 女子 60 公斤級</span>
+                    </p>
+                    <h1 class="a-hero__name reveal" style="--d: 1">林郁婷</h1>
+                    <p class="a-hero__name-en reveal" style="--d: 2">LIN YU-TING</p>
+                    <div class="a-hero__badges reveal" style="--d: 3">
+                        <span class="a-medal a-medal--gold"><img src="assets/athlete/icon-medal-gold.svg" alt="" width="15" height="15" />2024 巴黎奧林匹克運動會 金牌</span>
+                        <span class="a-medal a-medal--silver"><img src="assets/athlete/icon-medal-silver.svg" alt="" width="15" height="15" />2026 世界拳擊盃中國站 銀牌</span>
+                    </div>
+                </div>
+                <dl class="a-hero__stats reveal" style="--d: 4">
+                    <div><dt>生涯總出賽</dt><dd>71</dd></div>
+                    <div><dt>生涯總獎牌</dt><dd>9</dd></div>
+                    <div><dt>參賽勝場</dt><dd>52</dd></div>
+                </dl>
+            </div>
+            <!-- 可互動的球員卡（位置由 js/athlete.js 依 PageTransition.heroCardGeometry 設定） -->
+            <div class="a-hero__card" id="hero-card"></div>
+        </section>
+
+        <!-- ================= 內容 ================= -->
+        <main class="a-main">
+
+            <section class="a-panel a-panel--profile reveal" aria-labelledby="h-profile">
+                <header class="a-head">
+                    <span class="a-square"></span>
+                    <span class="a-head__en">PROFILE</span>
+                    <h2 id="h-profile">基本資料</h2>
+                </header>
+                <div class="a-profile">
+                    <div class="a-field"><span class="a-field__label">出生年</span><span class="a-field__num">1995.12.13</span></div>
+                    <div class="a-field"><span class="a-field__label">身高</span><span class="a-field__num">175<small>cm</small></span></div>
+                    <div class="a-field"><span class="a-field__label">現行量級</span><span class="a-field__num">60<small>kg</small></span></div>
+                    <div class="a-field"><span class="a-field__label">出生地</span><span class="a-field__text">新北市鶯歌區</span></div>
+                    <div class="a-field"><span class="a-field__label">教練</span><span class="a-field__text">曾自強</span></div>
+                </div>
+            </section>
+
+            <section class="a-panel a-panel--stats reveal" aria-labelledby="h-stats">
+                <header class="a-head">
+                    <span class="a-square a-square--red"></span>
+                    <span class="a-head__en a-head__en--alt">CAREER STATS</span>
+                    <h2 id="h-stats">生涯統計</h2>
+                </header>
+                <div class="a-stats">
+                    <div class="a-stat"><span class="a-stat__num">71</span><span class="a-stat__label">生涯總出賽</span><span class="a-stat__sub">國內外賽事合計</span></div>
+                    <div class="a-stat"><span class="a-stat__num">1</span><span class="a-stat__label a-stat__label--hl">奧運</span><span class="a-stat__sub">金 1</span></div>
+                    <div class="a-stat"><span class="a-stat__num">2</span><span class="a-stat__label">亞運</span><span class="a-stat__sub">金 1、銅 1</span></div>
+                    <div class="a-stat"><span class="a-stat__num">3</span><span class="a-stat__label">世界錦標賽獎牌</span><span class="a-stat__sub">金 2、銅 1</span></div>
+                </div>
+            </section>
+
+            <section class="a-panel a-panel--timeline reveal" aria-labelledby="h-timeline">
+                <header class="a-head">
+                    <span class="a-square a-square--red"></span>
+                    <span class="a-head__en a-head__en--alt">TIMELINE</span>
+                    <h2 id="h-timeline">生涯歷程</h2>
+                </header>
+                <ol class="a-timeline">
+                    <li class="a-tl is-latest">
+                        <span class="a-tl__year">2026</span>
+                        <div class="a-tl__body">
+                            <p class="a-tl__title">世界拳擊盃中國站 <span class="a-medal a-medal--silver"><img src="assets/athlete/icon-medal-silver.svg" alt="" width="15" height="15" />銀牌</span></p>
+                            <p class="a-tl__desc">女子 60kg 級</p>
+                        </div>
+                    </li>
+                    <li class="a-tl">
+                        <span class="a-tl__year">2026</span>
+                        <div class="a-tl__body">
+                            <p class="a-tl__title">亞洲拳擊錦標賽 <span class="a-medal a-medal--bronze"><img src="assets/athlete/icon-medal-silver.svg" alt="" width="15" height="15" />銅牌</span></p>
+                            <p class="a-tl__desc">女子 60kg 級，烏蘭巴托，轉量級後首場國際賽。</p>
+                        </div>
+                    </li>
+                    <li class="a-tl">
+                        <span class="a-tl__year">2025</span>
+                        <div class="a-tl__body">
+                            <p class="a-tl__title">全國運動會 <span class="a-medal a-medal--gold"><img src="assets/athlete/icon-medal-gold.svg" alt="" width="15" height="15" />金牌</span></p>
+                            <p class="a-tl__desc">女子 60kg 級，台灣，巴黎奧運後首場正式賽事。</p>
+                        </div>
+                    </li>
+                    <li class="a-tl">
+                        <span class="a-tl__year">2024</span>
+                        <div class="a-tl__body">
+                            <p class="a-tl__title">巴黎奧林匹克運動會 <span class="a-medal a-medal--gold"><img src="assets/athlete/icon-medal-gold.svg" alt="" width="15" height="15" />金牌</span></p>
+                            <p class="a-tl__desc">女子 57kg 級，台灣奧運拳擊史上首金。</p>
+                        </div>
+                    </li>
+                    <li class="a-tl">
+                        <span class="a-tl__year">2023</span>
+                        <div class="a-tl__body">
+                            <p class="a-tl__title">杭州亞洲運動會 <span class="a-medal a-medal--gold"><img src="assets/athlete/icon-medal-gold.svg" alt="" width="15" height="15" />金牌</span></p>
+                            <p class="a-tl__desc">女子 57kg 級，杭州，台灣拳擊史上首面亞運女子金牌。</p>
+                        </div>
+                    </li>
+                </ol>
+                <div class="a-more"><span class="a-more__btn">展開更多歷程（尚有 5 筆）</span></div>
+            </section>
+
+            <section class="a-panel a-panel--results reveal" aria-labelledby="h-results">
+                <header class="a-head">
+                    <span class="a-square a-square--red"></span>
+                    <span class="a-head__en a-head__en--alt">RESULTS</span>
+                    <h2 id="h-results">歷年賽事成績</h2>
+                </header>
+                <div class="a-table-wrap">
+                    <table class="a-table">
+                        <thead>
+                            <tr><th>年份</th><th>賽事名稱</th><th>地點</th><th>量級</th><th>名次</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>2026</td><td>世界拳擊盃中國站</td><td>中國</td><td>女子 60kg</td><td><span class="a-rank a-rank--silver">銀牌</span></td></tr>
+                            <tr><td>2026</td><td>亞洲拳擊錦標賽</td><td>烏蘭巴托</td><td>女子 60kg</td><td><span class="a-rank a-rank--bronze">銅牌</span></td></tr>
+                            <tr><td>2025</td><td>全國運動會</td><td>台灣</td><td>女子 60kg</td><td><span class="a-rank a-rank--gold">金牌</span></td></tr>
+                            <tr><td>2024</td><td>巴黎奧林匹克運動會</td><td>法國巴黎</td><td>女子 57kg</td><td><span class="a-rank a-rank--gold">金牌</span></td></tr>
+                            <tr><td>2023</td><td>杭州亞洲運動會</td><td>中國杭州</td><td>女子 57kg</td><td><span class="a-rank a-rank--gold">金牌</span></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="a-more"><span class="a-more__btn">展開更多賽事記錄（尚有 5 筆）</span></div>
+            </section>
+
+            <section class="a-panel a-panel--gallery reveal" aria-labelledby="h-gallery">
+                <header class="a-head">
+                    <span class="a-square a-square--red"></span>
+                    <span class="a-head__en a-head__en--alt">GALLERY</span>
+                    <h2 id="h-gallery">官方照片相簿</h2>
+                </header>
+                <div class="a-gallery">
+                    <div class="a-gallery__item a-gallery__item--main"><img src="assets/athlete/gallery-1.png" alt="林郁婷於頒獎台上揮手致意" /></div>
+                    <div class="a-gallery__item"><img src="assets/athlete/gallery-2.png" alt="林郁婷賽後與教練於擂台上慶祝" /></div>
+                    <div class="a-gallery__item a-gallery__item--zoom"><img src="assets/athlete/gallery-3.png" alt="林郁婷與代表團成員合影" /></div>
+                    <div class="a-gallery__item"><img src="assets/athlete/gallery-4.png" alt="中華隊加油活動大合照" /></div>
+                    <div class="a-gallery__item a-gallery__item--top"><img src="assets/athlete/gallery-5.png" alt="林郁婷於擂台上舉手慶祝" /></div>
+                </div>
+            </section>
+
+            <section class="a-panel a-panel--video reveal" aria-labelledby="h-video">
+                <header class="a-head">
+                    <span class="a-square a-square--red"></span>
+                    <span class="a-head__en a-head__en--alt">VIDEO</span>
+                    <h2 id="h-video">影音專區</h2>
+                </header>
+                <div class="a-video">
+                    <figure class="a-video__item a-video__item--main">
+                        <img src="assets/athlete/video-1.png" alt="" />
+                        <span class="a-video__play a-video__play--lg"><img src="assets/athlete/icon-play-lg.svg" alt="" width="30" height="30" /></span>
+                        <figcaption><span class="a-video__time">04:12</span><span class="a-video__title">世界拳擊盃中國站 女子 60kg 紀錄</span></figcaption>
+                    </figure>
+                    <div class="a-video__side">
+                        <figure class="a-video__item">
+                            <img src="assets/athlete/video-2.png" alt="" />
+                            <span class="a-video__play"><img src="assets/athlete/icon-play-sm.svg" alt="" width="18" height="18" /></span>
+                            <figcaption><span class="a-video__time">02:38</span><span class="a-video__title">亞洲拳擊錦標賽</span></figcaption>
+                        </figure>
+                        <figure class="a-video__item">
+                            <img src="assets/athlete/video-3.png" alt="" />
+                            <span class="a-video__play"><img src="assets/athlete/icon-play-sm.svg" alt="" width="18" height="18" /></span>
+                            <figcaption><span class="a-video__time">01:05</span><span class="a-video__title">巴黎奧林匹克運動會</span></figcaption>
+                        </figure>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- ================= 跑馬燈 ================= -->
+        <div class="a-marquee" aria-hidden="true">
+            <div class="a-marquee__track">
+                <span class="a-marquee__en">COLLECT THE GLORY</span><span class="a-marquee__star">★</span><span class="a-marquee__zh">亞運精英運動員卡</span><span class="a-marquee__star">★</span>
+                <span class="a-marquee__en">COLLECT THE GLORY</span><span class="a-marquee__star">★</span><span class="a-marquee__zh">亞運精英運動員卡</span><span class="a-marquee__star">★</span>
+                <span class="a-marquee__en">COLLECT THE GLORY</span><span class="a-marquee__star">★</span><span class="a-marquee__zh">亞運精英運動員卡</span><span class="a-marquee__star">★</span>
+                <span class="a-marquee__en">COLLECT THE GLORY</span><span class="a-marquee__star">★</span><span class="a-marquee__zh">亞運精英運動員卡</span><span class="a-marquee__star">★</span>
+            </div>
+        </div>
+
+        <!-- ================= 頁尾（展示用；僅「關於運動員卡」可點） ================= -->
+        <footer class="footer footer--athlete">
+            <div class="footer__top">
+                <div class="footer__brand">
+                    <div class="footer__logos">
+                        <div class="footer__logo-row">
+                            <div class="logo-mos logo-mos--footer" role="img" aria-label="運動部 Ministry of Sports">
+                                <img class="logo-mos__g9" src="assets/footer-mos-g9.svg" alt="" />
+                                <img class="logo-mos__g24" src="assets/footer-mos-g24.svg" alt="" />
+                                <img class="logo-mos__g27" src="assets/footer-mos-g27.svg" alt="" />
+                            </div>
+                            <div class="logo-ctoc logo-ctoc--footer">
+                                <img src="assets/ctoc-emblem.png" alt="" />
+                                <div class="logo-ctoc__text">
+                                    <span class="logo-ctoc__zh">中華奧林匹克委員會</span>
+                                    <span class="logo-ctoc__en">Chinese Taipei Olympic Committee</span>
+                                </div>
+                            </div>
+                        </div>
+                        <img class="logo-tisi logo-tisi--footer" src="assets/athlete/f-tisi.svg" alt="國家運動產業發展中心 Taiwan Institute of Sports Industry" />
+                    </div>
+                    <div class="footer__site">
+                        <span class="footer__site-zh">亞運精英運動員卡</span>
+                        <span class="footer__site-en">ASIAN GAMES ELITE ATHLETE CARD</span>
+                    </div>
+                </div>
+                <nav class="footer__col" aria-label="網站地圖">
+                    <h2 class="footer__heading">網站地圖</h2>
+                    <ul class="footer__links">
+                        <li><a href="index.html" data-transition>關於運動員卡</a></li>
+                        <li>選手總覽</li>
+                        <li>卡片系列</li>
+                        <li>購買管道</li>
+                    </ul>
+                </nav>
+                <nav class="footer__col" aria-label="使用協助">
+                    <h2 class="footer__heading">使用協助</h2>
+                    <ul class="footer__links">
+                        <li>感應教學</li>
+                        <li>常見問題</li>
+                        <li>無障礙宣告</li>
+                        <li>隱私權政策</li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="footer__bottom">
+                <img class="footer__badge" src="assets/accessibility-aa.png" alt="無障礙標章 2.1 AA" width="160" height="56" />
+                <p class="footer__copy">© 2026 國家運動產業發展中心&nbsp;&nbsp;|&nbsp; Design by.數位方塊　本網站已通過無障礙網頁 AA 等級檢測</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- 一般 script（非 module），雙擊以 file:// 開啟也能執行 -->
+    <script src="js/cards.js"></script>
+    <script src="js/transition.js"></script>
+    <script src="js/athlete.js"></script>
+</body>
+</html>
