@@ -15,6 +15,12 @@
 
 */
 
+/* 紋理變數放在與使用端（css/cards/*.css）同一層：Chrome 以 var() 使用處的樣式表解析相對路徑 */
+.card {
+  --grain: url("../../img/grain.webp");
+  --glitter: url("../../img/glitter.png");
+}
+
 
 :root {
   

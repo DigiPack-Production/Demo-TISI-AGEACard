@@ -12,12 +12,12 @@
   // 選手依序循環排列（前四位同 Figma 設計稿順序）
   // sport = 卡下顯示文字；category = 對應搜尋彈窗的「運動類別」
   var PLAYERS = [
-    { name: "丁華恬", sport: "體操", category: "競技體操", img: "images/丁華恬.png" },
-    { name: "孫振", sport: "霹靂舞", category: "霹靂舞", img: "images/孫振.png" },
-    { name: "林昀儒", sport: "桌球", category: "桌球", img: "images/林昀儒.png" },
-    { name: "張博雅", sport: "田徑", category: "田徑", img: "images/張博雅.png" },
-    { name: "林郁婷", sport: "拳擊", category: "拳擊", img: "images/林郁婷.png" },
-    { name: "王齊麟", sport: "羽球", category: "羽球", img: "images/王齊麟.png" }
+    { name: "丁華恬", sport: "體操", category: "競技體操", img: "images/ting-hua-tien.png" },
+    { name: "孫振", sport: "霹靂舞", category: "霹靂舞", img: "images/sun-chen.png" },
+    { name: "林昀儒", sport: "桌球", category: "桌球", img: "images/lin-yun-ju.png" },
+    { name: "張博雅", sport: "田徑", category: "田徑", img: "images/chang-po-ya.png" },
+    { name: "林郁婷", sport: "拳擊", category: "拳擊", img: "images/lin-yu-ting.png" },
+    { name: "王齊麟", sport: "羽球", category: "羽球", img: "images/wang-chi-lin.png" }
   ];
 
   // 電腦版 3×5 = 15 張；手機版由 CSS 只顯示前 9 張（3×3）
