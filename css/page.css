@@ -59,6 +59,22 @@ body.is-modal-open {
   overflow-x: clip;
 }
 
+/* 資料由下而上漸入（js/reveal.js 以 IntersectionObserver 觸發；首頁、運動員頁共用） */
+
+html.js-reveal .reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition-delay: calc(var(--d, 0) * 90ms);
+}
+
+html.js-reveal .reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
 /* 40px 網格背景（Figma「網格背景」元件） */
 .hero__grid,
 .cards-section__grid-bg {
@@ -529,12 +545,12 @@ body.is-modal-open {
   background: repeating-linear-gradient(to bottom, var(--orange-line) 0 4px, transparent 4px 8px);
 }
 
-/* ================= 查看資料（卡片放大時，畫面下緣內縮 15px） ================= */
+/* ================= 查看資料（卡片放大時，畫面下緣內縮 24px） ================= */
 
 .view-profile {
   position: fixed;
   left: 50%;
-  bottom: 15px;
+  bottom: 24px;
   z-index: 1500;
   display: flex;
   align-items: center;
@@ -576,12 +592,13 @@ body.is-modal-open {
   to { opacity: 1; transform: translate(-50%, 0); }
 }
 
-/* ================= 頁尾 ================= */
+/* ================= 頁尾（各頁共用同一版） ================= */
 
 .footer {
   display: flex;
   flex-direction: column;
-  padding: max(48px, calc(120px * var(--s))) max(16px, calc(240px * var(--s)));
+  /* 1920 設計稿上下 120、左右 240，隨視窗寬等比縮放 */
+  padding: clamp(48px, 6.25vw, 120px) clamp(16px, 12.5vw, 240px);
   background: #0b0908;
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-top: none;
@@ -709,6 +726,17 @@ body.is-modal-open {
   color: #c6bbb0;
   font-size: 15px;
   line-height: normal;
+}
+
+.footer__links a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.footer__links a:hover,
+.footer__links a:focus-visible {
+  color: #fff;
+  text-decoration: underline;
 }
 
 .footer__bottom {

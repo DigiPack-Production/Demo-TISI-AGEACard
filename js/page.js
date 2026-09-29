@@ -1,9 +1,10 @@
 /*
-  亞運菁英運動員卡片展示 — 首頁互動
+  亞運菁英運動員卡片展示 — 關於運動員卡頁（about.html）互動
   - 設定 --s（依 1920px 設計稿等比縮放）
   - 「使用運動類別排序」下拉：選類別即篩選
   - 「搜尋」彈窗：選手名稱搜尋、運動類別篩選
   篩選結果只顯示符合的選手各一張；卡片由 js/cards.js 的 CardGallery 產生。
+  「查看資料」按鈕見 js/view-profile.js。
 */
 (function () {
   "use strict";
@@ -307,47 +308,7 @@
 
   syncSelected();
 
-  /* ---------------- 查看資料（卡片放大時顯示） ---------------- */
-
-  var viewBtn = document.getElementById("view-profile");
-  viewBtn.setAttribute("data-keeps-card", "");
-
-  document.addEventListener("cardactivechange", function (e) {
-    viewBtn.hidden = !e.detail.card;
-  });
-
-  // 滑鼠點按鈕時不讓卡片失焦（失焦會收回卡片）
-  viewBtn.addEventListener("mousedown", function (e) { e.preventDefault(); });
-
-  // 鍵盤 Tab 離開按鈕、且不是回到卡片時，收回卡片
-  viewBtn.addEventListener("blur", function (e) {
-    var card = gallery.getActive();
-    if (card && e.relatedTarget !== card.rotator) gallery.deactivateActive();
-  });
-
-  // 轉場：頁面收合，放大中的卡片不被覆蓋，飄到運動員頁主視覺卡片的位置後換頁
-  viewBtn.addEventListener("click", function () {
-    var card = gallery.getActive();
-    if (!card || PT.isBusy()) return;
-    var url = "athlete.html?card=" + encodeURIComponent(card.data.img);
-
-    if (PT.reducedMotion()) {
-      PT.navigate(url, site);
-      return;
-    }
-
-    var r = card.rotator.getBoundingClientRect();
-    var fly = PT.flyCard(card.frontImg.src, {
-      cx: r.left + r.width / 2,
-      cy: r.top + r.height / 2,
-      w: r.width,
-      rot: 0
-    });
-    card.el.style.visibility = "hidden";
-    viewBtn.hidden = true;
-    PT.navigate(url, site, fly.moveTo(PT.heroCardGeometry(), PT.SHRINK_MS + PT.HOLD_MS));
-  });
-
-  // 由運動員頁返回：從中心展開
+  // 由其他頁返回：從中心展開
   PT.enter(site);
+  PT.bindLinks(site);
 })();

@@ -1,9 +1,9 @@
 /*
   亞運菁英運動員卡片展示 — 轉場換頁特效（Figma「轉場換頁特效」）
   裁切框（相對視窗的 inset）從全畫面縮到中心 → 再從中心展開到下一頁，
-  四條虛線跟著框邊移動並延伸到畫面邊界。
+  四條虛線跟著框邊移動並延伸到畫面邊界；收緊時在十字虛線左上方（距虛線 32px）顯示運動員頁導覽列的 logo，展開時淡出。
 
-  兩頁共用：
+  各頁共用：
   - PageTransition.swap / shrink / grow：同頁內切換（搜尋彈窗）
   - PageTransition.navigate：收合目前頁面後換頁，下一頁載入時自動展開
   - PageTransition.heroCardGeometry：運動員頁主視覺卡片的位置（轉場時卡片飄移的落點）
@@ -19,6 +19,8 @@
   var SHRINK_MS = 450;
   var HOLD_MS = 120;
   var GROW_MS = 450;
+  var LOGO_FADE_MS = 150; // logo 在收緊前 150ms 開始淡入，收緊時剛好完全顯示
+  var LOGO_GAP = 32;      // logo 與十字虛線的間距
   var params = new URLSearchParams(location.search);
 
   var overlay = document.createElement("div");
@@ -29,8 +31,17 @@
     '<div class="page-transition__line page-transition__line--top"></div>' +
     '<div class="page-transition__line page-transition__line--bottom"></div>' +
     '<div class="page-transition__line page-transition__line--left"></div>' +
-    '<div class="page-transition__line page-transition__line--right"></div>';
+    '<div class="page-transition__line page-transition__line--right"></div>' +
+    // 同運動員頁導覽列左上方的 logo
+    '<div class="page-transition__logo">' +
+      '<img class="page-transition__logo-icon" src="assets/athlete/nav-tisi-icon.svg" alt="" width="83" height="38" />' +
+      '<div class="page-transition__logo-site">' +
+        '<span class="page-transition__logo-zh"><img src="assets/ctoc-emblem.png" alt="" width="23" height="23" />亞運菁英運動員卡</span>' +
+        '<span class="page-transition__logo-en">ASIAN GAMES ELITE ATHLETE CARD</span>' +
+      '</div>' +
+    '</div>';
   document.body.appendChild(overlay);
+  var logo = overlay.querySelector(".page-transition__logo");
 
   var busy = false;
 
@@ -68,6 +79,33 @@
       (box.l - r.left) + "px)";
   }
 
+  // logo 右下角對齊十字虛線（收緊框的左、上兩條線）左上方 32px；視窗太窄時等比縮小
+  function placeLogo() {
+    var box = centerBox();
+    var w = logo.offsetWidth;
+    var h = logo.offsetHeight;
+    var scale = Math.min(1, (box.l - LOGO_GAP - 12) / w);
+    logo.style.transform = "scale(" + scale + ")";
+    logo.style.left = (box.l - LOGO_GAP - w * scale) + "px";
+    logo.style.top = (box.t - LOGO_GAP - h * scale) + "px";
+  }
+
+  function showLogo() {
+    placeLogo();
+    overlay.classList.add("has-logo");
+  }
+
+  function hideLogo() {
+    overlay.classList.remove("has-logo");
+  }
+
+  // 收合動畫結束前開始淡入
+  function showLogoAfterShrink() {
+    return wait(SHRINK_MS - LOGO_FADE_MS).then(function () {
+      if (busy) showLogo();
+    });
+  }
+
   function tween(el, from, to, ms) {
     return new Promise(function (resolve) {
       var start = performance.now();
@@ -97,6 +135,7 @@
 
   function end(els) {
     els.forEach(function (el) { el.style.clipPath = ""; });
+    hideLogo();
     overlay.hidden = true;
     root.classList.remove("is-transitioning");
     busy = false;
@@ -117,21 +156,26 @@
     swap: function (outEl, inEl, mid, stayClipped) {
       begin();
       (stayClipped || []).forEach(function (el) { clip(el, centerBox()); });
+      showLogoAfterShrink();
       return tween(outEl, FULL, centerBox(), SHRINK_MS)
         .then(function () { return mid && mid(); })
         .then(function () {
           clip(inEl, centerBox());
           return wait(HOLD_MS);
         })
-        .then(function () { return tween(inEl, centerBox(), FULL, GROW_MS); })
+        .then(function () {
+          hideLogo();
+          return tween(inEl, centerBox(), FULL, GROW_MS);
+        })
         .then(function () { end([outEl, inEl].concat(stayClipped || [])); });
     },
 
     /*
       換頁：目前頁面縮到中心後前往 url，下一頁載入時由 enter() 展開。
       alongside：與收合同時進行的動畫（Promise），例如卡片飄移。
+      stayClipped：一開始就保持收合的元素（例如從選單換頁時，選單底下的頁面）。
     */
-    navigate: function (url, siteEl, alongside) {
+    navigate: function (url, siteEl, alongside, stayClipped) {
       if (busy) return;
       url += (url.indexOf("?") === -1 ? "?" : "&") + "pt=1";
       if (reduceMotion.matches) {
@@ -139,6 +183,8 @@
         return;
       }
       begin();
+      (stayClipped || []).forEach(function (el) { clip(el, centerBox()); });
+      showLogoAfterShrink();
       Promise.all([
         tween(siteEl, FULL, centerBox(), SHRINK_MS).then(function () { return wait(HOLD_MS); }),
         alongside || Promise.resolve()
@@ -161,9 +207,13 @@
       }
       begin(centerBox());
       clip(siteEl, centerBox());
+      showLogo(); // 接續上一頁收緊時的 logo（剛顯示的 overlay 不會播放淡入）
       root.classList.remove("pt-entering");
       return wait(HOLD_MS)
-        .then(function () { return tween(siteEl, centerBox(), FULL, GROW_MS); })
+        .then(function () {
+          hideLogo();
+          return tween(siteEl, centerBox(), FULL, GROW_MS);
+        })
         .then(function () {
           end([siteEl]);
           return true;
@@ -191,6 +241,17 @@
         w: w,
         rot: 8.3
       };
+    },
+
+    // 頁面內 a[data-transition] 連結：收合目前頁面後換頁（按住 Ctrl 等開新分頁時照常）
+    bindLinks: function (siteEl) {
+      document.querySelectorAll("a[data-transition]").forEach(function (a) {
+        a.addEventListener("click", function (e) {
+          if (e.ctrlKey || e.metaKey || e.shiftKey || e.button !== 0) return;
+          e.preventDefault();
+          PT.navigate(a.getAttribute("href"), siteEl);
+        });
+      });
     },
 
     // 從首頁飄過來的卡片圖（網址參數 card，需在 enter() 之前讀取）

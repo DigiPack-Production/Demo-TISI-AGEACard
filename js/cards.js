@@ -20,8 +20,10 @@
     { name: "王齊麟", sport: "羽球", category: "羽球", img: "images/wang-chi-lin.png" }
   ];
 
-  // 電腦版 3×5 = 15 張；手機版由 CSS 只顯示前 9 張（3×3）
-  var TOTAL_CARDS = 15;
+  var grid = document.getElementById("card-grid");
+
+  // 張數由格線的 data-total 指定（關於運動員卡頁：電腦版 3×5 = 15 張，手機版由 CSS 只顯示前 9 張；首頁 2×6 = 12 張）
+  var TOTAL_CARDS = grid && grid.dataset.total ? Number(grid.dataset.total) : 15;
 
   // hover 光暈顏色依卡片位置（Figma 前 10 張的順序，每 10 張循環），
   // 使用原版內建的屬性光暈色（css/cards/base.css 的 .card.water 等）
@@ -604,7 +606,6 @@
 
   /* ---------------- 建立卡片格線 ---------------- */
 
-  var grid = document.getElementById("card-grid");
   var extraCards = []; // 格線以外單獨掛載的卡片（例如運動員頁主視覺）
 
   // 以指定的選手清單重建卡片；showcase = 第一張卡是否播放載入展示動畫
