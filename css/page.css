@@ -602,6 +602,41 @@ html.js-reveal .reveal.is-visible {
 
 /* ================= 查看資料（卡片放大時，畫面下緣內縮 24px） ================= */
 
+/*
+  卡片放大時的背景遮罩（js/card-backdrop.js）：變暗 40% + 毛玻璃模糊。
+  卡片區為 3D 空間，排序依 Z 軸：未放大的卡片在 z = 150px（傾斜時約 ±50px），遮罩在 500px，放大的卡片（.is-lifted）推到 1000px 以上
+*/
+.card-backdrop {
+  position: fixed;
+  background: rgba(0, 0, 0, 0.4);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  transform: translateZ(500px);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.3s ease, visibility 0s 0.3s;
+}
+
+.card-backdrop.is-shown {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0.3s ease;
+}
+
+/* 觸控長按看特效（js/card-hold.js）時，不選取文字、不跳出 iOS 圖片選單 */
+.card__rotator {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* 放大中與縮回中的卡片往前推（無透視，只影響前後排序、不影響大小），翻轉時整張都在遮罩之前 */
+.card.is-lifted .card__translater {
+  --translate-z: calc(var(--card-scale) * 150px + 1000.01px);
+}
+
 .view-profile {
   position: fixed;
   left: 50%;
