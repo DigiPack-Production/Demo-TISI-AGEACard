@@ -277,6 +277,15 @@
   line-height: normal;
   letter-spacing: 8.0825px;
   white-space: nowrap;
+  border: none;
+  color: inherit;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.h-hero__cta-btn:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 4px;
 }
 
 /* 卡包（Figma V0085，旋轉 14.6°） */
@@ -1118,6 +1127,245 @@ a.h-menu__item:focus-visible .h-menu__zh::after {
   letter-spacing: 2.2px;
 }
 
+/* ================= 抽卡過場（Figma 動畫 368:2441「15」） ================= */
+/* 1100 × 1940 設計稿為舞台，依 --os = min(視窗寬 / 1100, 視窗高 / 1940) 等比縮放、置中；網格與框線延伸到畫面邊界 */
+
+.h-open {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  overflow: hidden;
+  background: #000;
+}
+
+.h-open[hidden] {
+  display: none;
+}
+
+.h-open__stage {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 1100px;
+  height: 1940px;
+  transform: translate(-50%, -50%) scale(var(--os, 1));
+}
+
+/* 72px 網格（同首頁 40px 網格放大 1.8 倍），線位置同 Figma */
+.h-open__grid {
+  position: absolute;
+  left: calc(48.04px - 71.96px * 40);
+  top: calc(69.03px - 71.96px * 40);
+  width: calc(71.96px * 96);
+  height: calc(71.96px * 108);
+  background-image:
+    linear-gradient(to right, var(--grid-line) 1.8px, transparent 1.8px),
+    linear-gradient(to bottom, var(--grid-line) 1.8px, transparent 1.8px);
+  background-size: 71.96px 71.96px;
+  pointer-events: none;
+}
+
+.h-open__line {
+  position: absolute;
+  pointer-events: none;
+}
+
+.h-open__line--top,
+.h-open__line--bottom {
+  left: -3000px;
+  width: 7100px;
+  height: 2.68px;
+  background: repeating-linear-gradient(to right, var(--orange-line) 0 5.36px, transparent 5.36px 10.72px);
+}
+
+.h-open__line--top { top: 309px; }
+.h-open__line--bottom { top: 1552.13px; }
+
+.h-open__line--left,
+.h-open__line--right {
+  top: -3000px;
+  width: 2.68px;
+  height: 7940px;
+  background: repeating-linear-gradient(to bottom, var(--orange-line) 0 5.36px, transparent 5.36px 10.72px);
+}
+
+.h-open__line--left { left: 532.6px; }
+.h-open__line--right { left: 1052.1px; }
+
+.h-open__star {
+  position: absolute;
+  display: block;
+  width: 28.13px;
+  height: 28.13px;
+}
+
+.h-open__star--tl { left: 527.24px; top: 302.3px; width: 14.74px; height: 14.74px; }
+.h-open__star--tr { left: 1040.05px; top: 295.6px; }
+.h-open__star--bl { left: 521.88px; top: 1538.74px; }
+.h-open__star--br { left: 1041.38px; top: 1540.08px; }
+
+.h-open__title {
+  position: absolute;
+  margin: 0;
+  line-height: normal;
+  white-space: nowrap;
+}
+
+.h-open__title--one { left: 4.31px; top: 36.05px; }
+.h-open__title--step { left: 127.58px; top: 1555.65px; }
+
+.h-open__en {
+  display: flex;
+  gap: 32.31px;
+  color: var(--orange-line);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 126.11px;
+}
+
+.h-open__zh {
+  position: absolute;
+  top: 155.55px;
+  color: #fff;
+  font-weight: 900;
+  font-size: 57.75px;
+}
+
+.h-open__title--one .h-open__zh { left: 275.88px; }
+.h-open__title--step .h-open__zh { left: 161.42px; }
+
+.h-open__video {
+  position: absolute;
+  left: 16.6px;
+  top: 25px;
+  width: 1080px;
+  height: 1920px;
+  pointer-events: none;
+}
+
+/* 不支援透明 webm 時（Safari）改用黑底 mp4，以 screen 疊加透出網格 */
+.h-open.is-screen .h-open__video {
+  mix-blend-mode: screen;
+}
+
+.h-open__logo {
+  position: absolute;
+  left: 597.9px;
+  top: 213px;
+  width: 429px;
+  height: 58px;
+}
+
+.h-open__loading {
+  position: absolute;
+  left: 0;
+  top: 940px;
+  width: 1100px;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 41.12px;
+  font-weight: 500;
+  letter-spacing: 11.1px;
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.h-open.is-loading .h-open__loading {
+  opacity: 1;
+  animation: h-open-blink 1.2s ease-in-out infinite;
+}
+
+@keyframes h-open-blink {
+  50% { opacity: 0.3; }
+}
+
+/*
+  剪刀裁線：影片停住那一格（第 75 格）卡包上緣的撕開線在影片 y ≈ 1050，
+  虛線與剪刀依此位置擺放（Figma 為傾斜的卡包，此處卡包已擺正，改為水平虛線）。
+  --cut：剪刀已拖曳的距離（舞台 px）
+*/
+.h-open__cut {
+  --cut: 0px;
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0s 0.3s;
+  pointer-events: none;
+}
+
+.h-open.is-cutting .h-open__cut {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.3s ease;
+}
+
+.h-open__hint {
+  position: absolute;
+  left: 404.6px;
+  top: 853px;
+  margin: 0;
+  color: #ff7b1c;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 41.12px;
+  line-height: normal;
+  letter-spacing: 11.1px;
+  white-space: nowrap;
+}
+
+/* 白色虛線：剪過的部分消失，虛線樣式固定不隨剪刀移動 */
+.h-open__dash {
+  position: absolute;
+  left: calc(140.6px + var(--cut));
+  top: 1071.5px;
+  width: max(0px, calc(839px - var(--cut)));
+  height: 7px;
+  background: repeating-linear-gradient(to right, #fff 0 14px, transparent 14px 28px);
+  background-position-x: calc(-1 * var(--cut));
+}
+
+/* 剪刀（60px）外圍加大可按範圍，手機上較好按住 */
+.h-open__scissors {
+  position: absolute;
+  left: 2.6px;
+  top: 985px;
+  width: 180px;
+  height: 180px;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: grab;
+  touch-action: none;
+  transform: translateX(var(--cut));
+  pointer-events: auto;
+}
+
+.h-open__scissors:active {
+  cursor: grabbing;
+}
+
+.h-open__scissors img {
+  display: block;
+  width: 60px;
+  height: 60px;
+  margin: auto;
+  pointer-events: none;
+}
+
+.h-open__scissors:focus-visible {
+  outline: 6px solid #fff;
+  outline-offset: -40px;
+}
+
+/* 關閉鈕：同主選單位置 */
+.h-open__close {
+  position: absolute;
+  top: 33.5px;
+  right: clamp(20px, 2.7vw, 52px);
+}
+
 /* ================= 手機版（< 768px） ================= */
 @media (max-width: 767px) {
   /* ---------- 主視覺：375 × 762 手機稿，依 --ms 縮放 ---------- */
@@ -1534,6 +1782,10 @@ a.h-menu__item:focus-visible .h-menu__zh::after {
 
   .h-menu__bar {
     min-height: 64px;
+  }
+
+  .h-open__close {
+    top: 12px;
   }
 
   .h-menu__item {

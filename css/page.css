@@ -134,6 +134,61 @@ html.js-reveal .reveal.is-visible {
   background: url("../assets/line-h.svg") repeat-x;
 }
 
+/* 左上 logo（回首頁），樣式同運動員頁導覽列 .a-nav__brand */
+.hero__brand {
+  position: absolute;
+  z-index: 2;
+  left: 52px;
+  top: 28px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #fff;
+  text-decoration: none;
+}
+
+.hero__brand:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 4px;
+}
+
+.hero__brand-logo {
+  display: block;
+  width: 82.742px;
+  height: 38px;
+}
+
+.hero__brand-site {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  line-height: normal;
+  white-space: nowrap;
+}
+
+.hero__brand-zh {
+  display: flex;
+  align-items: flex-start;
+  gap: 4px;
+  font-weight: 900;
+  font-size: 19px;
+  letter-spacing: 1.14px;
+}
+
+.hero__brand-zh img {
+  display: block;
+  width: 22.773px;
+  height: 22.5px;
+  object-fit: cover;
+}
+
+.hero__brand-en {
+  color: #a2968a;
+  font-family: var(--font-latin);
+  font-size: 10px;
+  letter-spacing: 0.5px;
+}
+
 /* 卡包展示（Deck Showcase 593×440） */
 .hero__deck {
   position: absolute;
@@ -996,6 +1051,7 @@ html.js-reveal .reveal.is-visible {
 
 .sport-chip__count {
   display: flex;
+  align-items: baseline; /* 數字（Inter）與「張」（Noto Sans TC）基線不同，改以基線對齊 */
   gap: 4px;
   color: #8b8b8b;
   font-size: 24px;
@@ -1035,6 +1091,34 @@ html.js-reveal .reveal.is-visible {
   .hero__grid {
     width: 100%;
     height: 100%;
+  }
+
+  /* logo 尺寸同運動員頁手機版導覽列 */
+  .hero__brand {
+    left: 16px;
+    top: 16px;
+    gap: 6px;
+  }
+
+  .hero__brand-logo {
+    width: 57px;
+    height: 26px;
+  }
+
+  .hero__brand-zh {
+    gap: 3px;
+    font-size: 14px;
+    letter-spacing: 0.8px;
+  }
+
+  .hero__brand-zh img {
+    width: 17px;
+    height: 17px;
+  }
+
+  .hero__brand-en {
+    font-size: 7.5px;
+    letter-spacing: 0.3px;
   }
 
   .hero__ellipse--1 { left: -90px; top: 250px; width: 200px; height: 200px; }
