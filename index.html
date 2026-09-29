@@ -35,99 +35,238 @@
     <!-- 字型（連網時載入；離線時退回系統字型） -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400&family=Noto+Sans+TC:wght@400;700;900&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Noto+Sans+TC:wght@400;500;700;900&family=Oswald:wght@700&display=swap" />
 
-    <!-- 本頁版面、轉場 -->
+    <!-- 共用版面（卡片格線、頁尾、查看資料）、轉場、首頁版面 -->
     <link rel="stylesheet" href="css/page.css" />
     <link rel="stylesheet" href="css/transition.css" />
+    <link rel="stylesheet" href="css/home.css" />
 
-    <!-- 換頁進場：由其他頁轉場過來時，先收合頁面等 JS 展開 -->
+    <!-- 換頁進場：由其他頁轉場過來時，先收合頁面等 JS 展開；進場動畫與漸入（減少動態效果時不播放） -->
     <script>
         if (/[?&]pt=1(&|$)/.test(location.search)) document.documentElement.classList.add("pt-entering");
+        if (!matchMedia("(prefers-reduced-motion: reduce)").matches) document.documentElement.classList.add("js-reveal");
     </script>
 </head>
-<body>
+<body class="home-body">
     <div class="site" id="site">
     <div class="page">
 
-        <!-- ================= 主視覺 ================= -->
-        <header class="hero">
-            <div class="hero__stage">
-                <div class="hero__grid" aria-hidden="true"></div>
-                <img class="hero__ellipse hero__ellipse--1" src="assets/ellipse-lg.svg" alt="" width="443" height="443" />
-                <img class="hero__ellipse hero__ellipse--2" src="assets/ellipse-lg.svg" alt="" width="443" height="443" />
-                <img class="hero__ellipse hero__ellipse--3" src="assets/ellipse-sm.svg" alt="" width="235" height="235" />
-                <img class="hero__ellipse hero__ellipse--4" src="assets/ellipse-sm.svg" alt="" width="235" height="235" />
-                <div class="hero__line-top" aria-hidden="true"></div>
+        <!-- ================= 主視覺（Figma 261:3372；手機 268:2184） ================= -->
+        <header class="h-hero" id="h-hero">
+            <div class="h-hero__stage">
+                <div class="h-grid h-hero__grid" aria-hidden="true"></div>
 
-                <div class="hero__deck" aria-hidden="true">
-                    <div class="hero__card">
-                        <img src="images/lin-yu-ting.png" alt="" />
-                        <img class="hero__card-mesh" src="assets/hero-card-mesh.png" alt="" />
-                    </div>
-                    <div class="hero__pack">
-                        <div class="hero__pack-inner">
-                            <img src="assets/card-pack.png" alt="" />
-                        </div>
-                    </div>
+                <div class="h-hero__line h-hero__line--top h-in h-in--x" style="--d: 0" aria-hidden="true"></div>
+                <div class="h-hero__line h-hero__line--bottom h-in h-in--x" style="--d: 0" aria-hidden="true"></div>
+                <div class="h-hero__line h-hero__line--left h-in h-in--y" style="--d: 1" aria-hidden="true"></div>
+                <div class="h-hero__line h-hero__line--right h-in h-in--y" style="--d: 1" aria-hidden="true"></div>
+                <img class="h-hero__star h-hero__star--tl h-in h-in--fade" style="--d: 3" src="assets/home/star-sm.svg" alt="" width="11" height="11" />
+                <img class="h-hero__star h-hero__star--tr h-in h-in--fade" style="--d: 3" src="assets/home/star.svg" alt="" width="21" height="21" />
+                <img class="h-hero__star h-hero__star--bl h-in h-in--fade" style="--d: 3" src="assets/home/star.svg" alt="" width="21" height="21" />
+                <img class="h-hero__star h-hero__star--br h-in h-in--fade" style="--d: 3" src="assets/home/star.svg" alt="" width="21" height="21" />
+
+                <p class="h-hero__brand h-in h-in--fade" style="--d: 2">
+                    <img src="assets/home/taiwan-mark.svg" alt="" width="23" height="43" />
+                    <span>TAIWAN</span>
+                </p>
+                <button class="h-hero__menu h-in h-in--fade" style="--d: 2" id="menu-btn" type="button" aria-haspopup="dialog" aria-controls="h-menu">
+                    <img src="assets/home/icon-menu.svg" alt="" width="32" height="32" />
+                    <span>主選單</span>
+                </button>
+
+                <h1 class="h-hero__title">
+                    <span class="h-hero__slogan h-hero__slogan--one h-in" style="--d: 3"><span>ONE</span><span>TEAM</span></span>
+                    <span class="h-hero__zh h-hero__zh--go h-in" style="--d: 6">前進亞運</span>
+                    <span class="h-hero__slogan h-hero__slogan--step h-in" style="--d: 4"><span>STEP</span><span>IN</span></span>
+                    <span class="h-hero__zh h-hero__zh--play h-in" style="--d: 7">一起上場</span>
+                </h1>
+
+                <!-- 選手群像（圖層順序同 Figma「人」）；圖片由 js/home.js 依畫面位置（上→下、左→右）依序載入並淡入 -->
+                <img class="h-hero__p h-hero__p--1 h-in h-in--photo h-seq" data-src="assets/home/hero-p1.webp" alt="" />
+                <picture>
+                    <source media="(max-width: 767px)" data-srcset="assets/home/hero-p2-m.webp" />
+                    <img class="h-hero__p h-hero__p--2 h-in h-in--photo h-seq" data-src="assets/home/hero-p2.webp" alt="" />
+                </picture>
+                <div class="h-hero__fade h-hero__fade--m1" aria-hidden="true"></div>
+                <img class="h-hero__p h-hero__p--3 h-in h-in--photo h-seq" data-src="assets/home/hero-p3.webp" alt="" />
+                <img class="h-hero__p h-hero__p--4 h-in h-in--photo h-seq" data-src="assets/home/hero-p4.webp" alt="" />
+                <div class="h-hero__fade h-hero__fade--m2" aria-hidden="true"></div>
+                <img class="h-hero__p h-hero__p--5 h-in h-in--photo h-seq" data-src="assets/home/hero-p5.webp" alt="" />
+                <div class="h-hero__fade h-hero__fade--m3" aria-hidden="true"></div>
+                <img class="h-hero__p h-hero__p--6 h-in h-in--photo h-seq" data-src="assets/home/hero-p6.webp" alt="" />
+                <img class="h-hero__p h-hero__p--7 h-in h-in--photo h-seq" data-src="assets/home/hero-p7.webp" alt="" />
+                <div class="h-hero__fade h-hero__fade--1" aria-hidden="true"></div>
+                <div class="h-hero__fade h-hero__fade--2" aria-hidden="true"></div>
+                <img class="h-hero__p h-hero__p--8 h-in h-in--photo h-seq" data-src="assets/home/hero-p8.webp" alt="" />
+                <div class="h-hero__fade h-hero__fade--3" aria-hidden="true"></div>
+                <div class="h-hero__fade h-hero__fade--m4" aria-hidden="true"></div>
+
+                <div class="h-hero__cta h-in" style="--d: 8">
+                    <p class="h-hero__cta-title">
+                        <span class="h-hero__cta-year">2026</span>
+                        <span class="h-hero__cta-main">亞運菁英運動員</span>
+                        <span class="h-hero__cta-sub">收藏卡包</span>
+                    </p>
+                    <!-- 抽卡功能與專屬過場動畫另行製作，目前僅展示 -->
+                    <span class="h-hero__cta-btn">點我抽卡</span>
                 </div>
 
-                <div class="hero__content">
-                    <h1 class="hero__title">
-                        <span class="hero__title-year">2026</span>
-                        <span class="hero__title-main">亞運菁英運動員</span>
-                        <span class="hero__title-sub">收藏卡包</span>
-                    </h1>
+                <div class="h-hero__pack h-in h-in--pack h-seq" aria-hidden="true">
+                    <div class="h-hero__pack-inner"><img data-src="assets/card-pack.png" alt="" /></div>
+                </div>
 
-                    <div class="hero__logos">
-                        <div class="logo-mos" role="img" aria-label="運動部 Ministry of Sports">
-                            <img class="logo-mos__g9" src="assets/mos-g9.svg" alt="" />
-                            <img class="logo-mos__g24" src="assets/mos-g24.svg" alt="" />
-                            <img class="logo-mos__g27" src="assets/mos-g27.svg" alt="" />
-                        </div>
-                        <div class="logo-ctoc">
-                            <img src="assets/ctoc-emblem.png" alt="" />
-                            <div class="logo-ctoc__text">
-                                <span class="logo-ctoc__zh">中華奧林匹克委員會</span>
-                                <span class="logo-ctoc__en">Chinese Taipei Olympic Committee</span>
-                            </div>
-                        </div>
-                        <img class="logo-tisi" src="assets/tisi-logo.svg" alt="國家運動產業發展中心 Taiwan Institute of Sports Industry" />
-                    </div>
+                <div class="logo-mos logo-mos--footer h-hero__mos h-in h-in--fade" style="--d: 9" role="img" aria-label="運動部 Ministry of Sports">
+                    <img class="logo-mos__g9" src="assets/footer-mos-g9.svg" alt="" />
+                    <img class="logo-mos__g24" src="assets/footer-mos-g24.svg" alt="" />
+                    <img class="logo-mos__g27" src="assets/footer-mos-g27.svg" alt="" />
+                </div>
 
-                    <div class="hero__actions">
-                        <div class="sort">
-                            <button class="pill-btn pill-btn--sort" id="sort-btn" type="button" aria-haspopup="listbox" aria-expanded="false" aria-controls="sort-list">
-                                <span id="sort-label">使用運動類別排序</span>
-                                <img class="pill-btn__chevron" src="assets/icon-chevron.svg" alt="" width="18" height="28" />
-                            </button>
-                            <ul class="sort__list" id="sort-list" role="listbox" aria-label="運動類別" hidden></ul>
-                        </div>
-                        <button class="pill-btn pill-btn--search" id="search-btn" type="button" aria-haspopup="dialog">
-                            <span>搜尋</span>
-                            <img src="assets/icon-search.svg" alt="" width="32" height="32" />
-                        </button>
+                <!-- 消息快訊（僅展示，不輪播） -->
+                <div class="h-news h-in" style="--d: 9">
+                    <span class="h-news__tag">消息快訊</span>
+                    <div class="h-news__box">
+                        <p class="h-news__title">實體卡包第一波釋出啦！點我搶購</p>
+                        <p class="h-news__date">2026/09/13<img src="assets/home/news-arrow.svg" alt="" width="70" height="8" /></p>
+                        <span class="h-news__arrows" aria-hidden="true">
+                            <img class="h-news__prev" src="assets/home/icon-chevron-right.svg" alt="" width="24" height="24" />
+                            <img src="assets/home/icon-chevron-right.svg" alt="" width="24" height="24" />
+                        </span>
                     </div>
                 </div>
             </div>
         </header>
 
-        <!-- 頁面裝飾虛線：放在卡片區之前，放大的卡片才會蓋在虛線上 -->
-        <div class="page__line page__line--h" aria-hidden="true"></div>
-        <div class="page__line page__line--v" aria-hidden="true"></div>
+        <!-- ================= DRAW THE ELITES（Figma 262:537） ================= -->
+        <section class="h-draw" aria-labelledby="h-draw-title">
+            <div class="h-draw__stage">
+                <div class="h-grid h-draw__grid" aria-hidden="true"></div>
 
-        <!-- ================= 卡片區 ================= -->
-        <section class="cards-section" aria-label="運動員卡片">
-            <div class="cards-section__grid-bg" aria-hidden="true"></div>
-            <div class="cards-panel">
-                <main class="card-grid" id="card-grid"></main>
-                <p class="cards-empty" id="cards-empty" hidden>查無符合的選手</p>
+                <header class="h-head h-draw__head reveal">
+                    <p class="h-head__eyebrow">INTERACTIVE CARD DRAW</p>
+                    <h2 class="h-head__titles" id="h-draw-title">
+                        <span class="h-head__en">DRAW THE ELITES</span>
+                        <span class="h-head__zh">點我抽卡</span>
+                    </h2>
+                </header>
+
+                <!-- 卡包展示（同關於運動員卡頁主視覺） -->
+                <div class="h-draw__deck reveal" style="--d: 1" aria-hidden="true">
+                    <div class="hero__deck">
+                        <div class="hero__card">
+                            <img src="images/lin-yu-ting.png" alt="" loading="lazy" />
+                            <img class="hero__card-mesh" src="assets/hero-card-mesh.png" alt="" loading="lazy" />
+                        </div>
+                        <div class="hero__pack">
+                            <div class="hero__pack-inner">
+                                <img src="assets/card-pack.png" alt="" loading="lazy" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="h-draw__text">
+                    <p class="h-draw__name reveal" style="--d: 2">
+                        <span class="h-draw__year">2026</span>
+                        <span class="h-draw__main">亞運菁英運動員</span>
+                        <span class="h-draw__sub">收藏卡包</span>
+                    </p>
+                    <div class="h-draw__desc reveal" style="--d: 3">
+                        <h3>抽取你的專屬亞運菁英卡</h3>
+                        <p>2026年名古屋亞運，台灣菁英運動員全力出擊。收集明星運動員代表卡，支持他們一起前進賽場！</p>
+                    </div>
+                </div>
+
+                <div class="h-buy">
+                    <h3 class="h-buy__title reveal">WHERE TO BUY</h3>
+                    <div class="h-buy__card reveal" style="--d: 1">
+                        <span class="h-buy__pill" aria-hidden="true"></span>
+                        <h4>線上購買</h4>
+                        <p>官方線上旗艦店正式開賣，支援刷卡及轉帳，全台免運配送。</p>
+                    </div>
+                    <div class="h-buy__card reveal" style="--d: 2">
+                        <span class="h-buy__pill" aria-hidden="true"></span>
+                        <h4>實體通路</h4>
+                        <p>全台限定運動用品店、亞運快閃概念店現場精裝版發售。</p>
+                    </div>
+                </div>
+
+                <span class="h-draw__square h-draw__square--1" aria-hidden="true"></span>
+                <span class="h-draw__square h-draw__square--2" aria-hidden="true"></span>
             </div>
         </section>
 
+        <!-- ================= TAIWAN（Figma 296:7792）：捲動時字樣由下往上拉高，之後卡片淡入並墜落到下一區 ================= -->
+        <section class="h-tw" id="h-tw" aria-label="TAIWAN">
+            <div class="h-tw__stage">
+                <div class="h-grid h-tw__grid" aria-hidden="true"></div>
+                <div class="h-tw__word" id="h-tw-word"><img src="assets/home/taiwan.svg" alt="TAIWAN" width="1460" height="491" /></div>
+                <!-- 墜落卡片的起點（不顯示） -->
+                <div class="h-tw__anchor" id="h-tw-anchor" aria-hidden="true"></div>
+            </div>
+        </section>
+
+        <!-- ================= THE CHAMPIONS（Figma 262:596） ================= -->
+        <section class="h-champ" aria-labelledby="h-champ-title">
+            <div class="h-champ__stage">
+                <div class="h-grid h-champ__grid" aria-hidden="true"></div>
+
+                <header class="h-head h-champ__head reveal">
+                    <p class="h-head__eyebrow">ELITE PLAYERS GALLERY</p>
+                    <h2 class="h-head__titles" id="h-champ-title">
+                        <span class="h-head__en">THE CHAMPIONS</span>
+                        <span class="h-head__zh">菁英球員卡</span>
+                    </h2>
+                </header>
+
+                <!-- 疊卡展示；王齊麟那張是墜落卡片的終點 -->
+                <div class="h-fan-wrap">
+                    <div class="h-fan reveal reveal--fade" aria-hidden="true">
+                        <img class="h-fan__card h-fan__card--dim h-fan__card--7" src="images/lin-yu-ting.png" alt="" loading="lazy" />
+                        <img class="h-fan__card h-fan__card--dim h-fan__card--6" src="images/lin-yu-ting.png" alt="" loading="lazy" />
+                        <img class="h-fan__card h-fan__card--dim h-fan__card--2" src="images/lin-yu-ting.png" alt="" loading="lazy" />
+                        <img class="h-fan__card h-fan__card--dim h-fan__card--3" src="images/lin-yu-ting.png" alt="" loading="lazy" />
+                        <img class="h-fan__card h-fan__card--5" id="h-fan-target" src="images/wang-chi-lin.png" alt="" loading="lazy" />
+                        <img class="h-fan__card h-fan__card--8" src="images/lin-yu-ting.png" alt="" loading="lazy" />
+                    </div>
+                </div>
+
+                <div class="h-nfc">
+                    <div class="h-nfc__badge reveal" style="--d: 1" aria-hidden="true">
+                        <span class="h-nfc__icon">
+                            <img class="h-nfc__i1" src="assets/home/nfc-1.svg" alt="" loading="lazy" />
+                            <img class="h-nfc__i2" src="assets/home/nfc-2.svg" alt="" loading="lazy" />
+                            <img class="h-nfc__i3" src="assets/home/nfc-3.svg" alt="" loading="lazy" />
+                        </span>
+                        <span class="h-nfc__label">NFC</span>
+                    </div>
+                    <div class="h-nfc__text reveal" style="--d: 2">
+                        <h3>NFC感應解鎖頁面內容</h3>
+                        <p>本年度的選手卡牌結合NFC，掃描即可解鎖更多頁面內容</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 球員卡（js/cards.js 產生，點擊放大後可「查看資料」） -->
+            <div class="h-champ__panel reveal">
+                <main class="card-grid" id="card-grid" data-total="12"></main>
+            </div>
+        </section>
+
+        <!-- 墜落中的卡片（位置由 js/home.js 依捲動計算） -->
+        <div class="h-faller" id="h-faller" aria-hidden="true">
+            <div class="h-faller__inner">
+                <img class="h-faller__front" src="images/wang-chi-lin.png" alt="" />
+                <img class="h-faller__back" src="images/card-back.jpg" alt="" />
+            </div>
+        </div>
+
+        <!-- 頁面裝飾虛線（Figma Line 1 / Line 2），在球員卡區下層 -->
+        <div class="h-lines" aria-hidden="true"></div>
+
     </div>
 
-    <!-- ================= 頁尾（展示用，項目不可點擊） ================= -->
+    <!-- ================= 頁尾（各頁共用同一版；僅「關於運動員卡」可點） ================= -->
     <footer class="footer">
         <div class="footer__top">
             <div class="footer__brand">
@@ -157,7 +296,7 @@
                 <h2 class="footer__heading">網站地圖</h2>
                 <ul class="footer__links">
                     <li>最新消息</li>
-                    <li>關於運動員卡</li>
+                    <li><a href="about.html" data-transition>關於運動員卡</a></li>
                     <li>運動員</li>
                     <li>如何購買</li>
                 </ul>
@@ -184,34 +323,37 @@
         <img src="assets/icon-chevron.svg" alt="" width="18" height="28" />
     </button>
 
-    <!-- ================= 搜尋彈窗 ================= -->
-    <div class="search-modal" id="search-modal" role="dialog" aria-modal="true" aria-labelledby="search-title" hidden>
-        <div class="search-modal__inner">
-        <div class="search-modal__panel">
-            <div class="search-modal__line search-modal__line--top" aria-hidden="true"></div>
-            <div class="search-modal__line search-modal__line--header" aria-hidden="true"></div>
-            <div class="search-modal__line search-modal__line--left" aria-hidden="true"></div>
-            <button class="search-modal__close" id="search-close" type="button" aria-label="關閉搜尋">
+    <!-- ================= 主選單（參考運動員頁導覽列項目；僅「關於運動員卡」可點） ================= -->
+    <div class="h-menu" id="h-menu" role="dialog" aria-modal="true" aria-label="主選單" hidden>
+        <div class="h-grid h-menu__grid" aria-hidden="true"></div>
+        <div class="h-menu__bar">
+            <p class="h-menu__brand">
+                <img src="assets/home/taiwan-mark.svg" alt="" width="23" height="43" />
+                <span>TAIWAN</span>
+            </p>
+            <button class="h-menu__close" id="menu-close" type="button" aria-label="關閉主選單">
                 <span></span><span></span>
             </button>
-            <div class="search-modal__header">
-                <h2 id="search-title">搜尋</h2>
-            </div>
-            <form class="search-field" id="search-form" role="search">
-                <input id="search-input" type="search" placeholder="使用選手名稱搜尋" aria-label="使用選手名稱搜尋" autocomplete="off" />
-                <button type="submit" aria-label="搜尋">
-                    <img src="assets/icon-search-sm.svg" alt="" width="24" height="24" />
-                </button>
-            </form>
-            <h3 class="search-modal__subtitle">運動類別</h3>
-            <div class="sport-chips" id="sport-chips"></div>
         </div>
-        </div>
+        <nav class="h-menu__nav" aria-label="主選單">
+            <ul>
+                <li><span class="h-menu__item"><span class="h-menu__no">01</span><span class="h-menu__zh">最新消息</span><span class="h-menu__en">NEWS</span></span></li>
+                <li><a class="h-menu__item" id="menu-about" href="about.html"><span class="h-menu__no">02</span><span class="h-menu__zh">關於運動員卡</span><span class="h-menu__en">ABOUT THE CARDS</span></a></li>
+                <li><span class="h-menu__item"><span class="h-menu__no">03</span><span class="h-menu__zh">運動員</span><span class="h-menu__en">ATHLETES</span></span></li>
+                <li><span class="h-menu__item"><span class="h-menu__no">04</span><span class="h-menu__zh">如何購買</span><span class="h-menu__en">HOW TO BUY</span></span></li>
+            </ul>
+        </nav>
+        <p class="h-menu__site">
+            <span class="h-menu__site-zh">亞運菁英運動員卡</span>
+            <span class="h-menu__site-en">ASIAN GAMES ELITE ATHLETE CARD</span>
+        </p>
     </div>
 
     <!-- 一般 script（非 module），雙擊以 file:// 開啟也能執行 -->
     <script src="js/cards.js"></script>
     <script src="js/transition.js"></script>
-    <script src="js/page.js"></script>
+    <script src="js/view-profile.js"></script>
+    <script src="js/reveal.js"></script>
+    <script src="js/home.js"></script>
 </body>
 </html>

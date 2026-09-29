@@ -52,7 +52,7 @@
 <body class="athlete-body">
     <div class="site" id="site">
 
-        <!-- ================= 導覽列（展示用；logo 與「關於運動員卡」可點） ================= -->
+        <!-- ================= 導覽列（展示用；logo 回首頁、「關於運動員卡」可點） ================= -->
         <header class="a-nav">
             <div class="a-nav__inner">
                 <a class="a-nav__brand" href="index.html" data-transition aria-label="回到亞運菁英運動員卡首頁">
@@ -64,7 +64,7 @@
                 </a>
                 <nav class="a-nav__links" aria-label="主選單">
                     <span>最新消息</span>
-                    <a href="index.html" data-transition>關於運動員卡</a>
+                    <a href="about.html" data-transition>關於運動員卡</a>
                     <span>運動員</span>
                     <span>如何購買</span>
                 </nav>
@@ -257,8 +257,8 @@
             </div>
         </div>
 
-        <!-- ================= 頁尾（展示用；僅「關於運動員卡」可點） ================= -->
-        <footer class="footer footer--athlete">
+        <!-- ================= 頁尾（各頁共用同一版；僅「關於運動員卡」可點） ================= -->
+        <footer class="footer">
             <div class="footer__top">
                 <div class="footer__brand">
                     <div class="footer__logos">
@@ -276,7 +276,7 @@
                                 </div>
                             </div>
                         </div>
-                        <img class="logo-tisi logo-tisi--footer" src="assets/athlete/f-tisi.svg" alt="國家運動產業發展中心 Taiwan Institute of Sports Industry" />
+                        <img class="logo-tisi logo-tisi--footer" src="assets/footer-tisi-logo.svg" alt="國家運動產業發展中心 Taiwan Institute of Sports Industry" />
                     </div>
                     <div class="footer__site">
                         <span class="footer__site-zh">亞運菁英運動員卡</span>
@@ -286,10 +286,10 @@
                 <nav class="footer__col" aria-label="網站地圖">
                     <h2 class="footer__heading">網站地圖</h2>
                     <ul class="footer__links">
-                        <li><a href="index.html" data-transition>關於運動員卡</a></li>
-                        <li>選手總覽</li>
-                        <li>卡片系列</li>
-                        <li>購買管道</li>
+                        <li>最新消息</li>
+                        <li><a href="about.html" data-transition>關於運動員卡</a></li>
+                        <li>運動員</li>
+                        <li>如何購買</li>
                     </ul>
                 </nav>
                 <nav class="footer__col" aria-label="使用協助">
@@ -311,6 +311,7 @@
     <!-- 一般 script（非 module），雙擊以 file:// 開啟也能執行 -->
     <script src="js/cards.js"></script>
     <script src="js/transition.js"></script>
+    <script src="js/reveal.js"></script>
     <script src="js/athlete.js"></script>
 </body>
 </html>

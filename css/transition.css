@@ -1,5 +1,5 @@
 /*
-  亞運菁英運動員卡片展示 — 轉場換頁特效（兩頁共用，搭配 js/transition.js）
+  亞運菁英運動員卡片展示 — 轉場換頁特效（各頁共用，搭配 js/transition.js）
   裁切框從全畫面縮至中心、再從中心展開到下一頁；
   四條虛線跟著框邊移動並延伸到畫面邊界。框的位置由 JS 以 --t/--r/--b/--l 設定。
 */
@@ -96,4 +96,61 @@ html.pt-entering #site {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+/* 收緊時顯示的 logo（同運動員頁導覽列 .a-nav__brand）；位置與縮放由 js/transition.js 設定 */
+.page-transition__logo {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #fff;
+  font-family: "Noto Sans TC", "Noto Sans CJK TC", "Microsoft JhengHei", "PingFang TC", sans-serif;
+  white-space: nowrap;
+  opacity: 0;
+  transform-origin: top left;
+  transition: opacity 0.15s ease;
+  pointer-events: none;
+}
+
+.page-transition.has-logo .page-transition__logo {
+  opacity: 1;
+}
+
+.page-transition__logo-icon {
+  display: block;
+  width: 82.742px;
+  height: 38px;
+}
+
+.page-transition__logo-site {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  line-height: normal;
+}
+
+.page-transition__logo-zh {
+  display: flex;
+  align-items: flex-start;
+  gap: 4px;
+  font-weight: 900;
+  font-size: 19px;
+  letter-spacing: 1.14px;
+}
+
+.page-transition__logo-zh img {
+  display: block;
+  width: 22.773px;
+  height: 22.5px;
+  object-fit: cover;
+}
+
+.page-transition__logo-en {
+  color: #a2968a;
+  font-family: "Inter", "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.5px;
 }

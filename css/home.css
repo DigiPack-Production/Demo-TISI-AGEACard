@@ -1,0 +1,1549 @@
+/*
+  亞運菁英運動員卡片展示 — 首頁（Figma 前台頁面「首頁」255:9435）
+  電腦版以 1920px 設計稿為舞台（.h-*__stage），依 --s = min(1, 視窗寬 / 1920) 等比縮放（js/home.js 設定）；
+  手機版（< 768px）主視覺以 375px 手機稿為舞台，依 --ms = 視窗寬 / 375 縮放，其餘區塊改為直向排版。
+  共用元件（卡片格線、頁尾、查看資料、卡包展示）沿用 css/page.css。
+*/
+
+.home-body {
+  --ms: 1;
+  --font-display: "Oswald", "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+  --section-bg: #08080a;
+}
+
+/* 40px 網格背景（Figma「網格背景」元件） */
+.h-grid {
+  position: absolute;
+  background-image:
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+}
+
+/* 電腦版舞台：1920 寬，置中並等比縮放；外層以 --s 撐出縮放後的高度 */
+.h-hero__stage,
+.h-draw__stage,
+.h-tw__stage,
+.h-champ__stage {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 1920px;
+  transform: translateX(-50%) scale(var(--s));
+  transform-origin: top center;
+}
+
+/* ================= 主視覺 ================= */
+
+.h-hero {
+  position: relative;
+  height: calc(1080px * var(--s));
+  overflow: hidden;
+}
+
+.h-hero__stage {
+  height: 1080px;
+  overflow: hidden;
+  background: #000;
+}
+
+.h-hero__grid {
+  top: -1px;
+  left: 0;
+  width: 1920px;
+  height: 1080px;
+}
+
+/* 框線（虛線延伸到畫面邊界） */
+.h-hero__line {
+  position: absolute;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.h-hero__line--top,
+.h-hero__line--bottom {
+  left: 0;
+  width: 1920px;
+  height: 2px;
+  background: url("../assets/line-h.svg") repeat-x;
+}
+
+.h-hero__line--top { top: 106px; }
+.h-hero__line--bottom { top: 959px; }
+
+.h-hero__line--left,
+.h-hero__line--right {
+  top: 0;
+  width: 2px;
+  height: 1080px;
+  background: repeating-linear-gradient(to bottom, var(--orange-line) 0 4px, transparent 4px 8px);
+}
+
+.h-hero__line--left { left: 198px; }
+.h-hero__line--right { left: 1720px; }
+
+.h-hero__star {
+  position: absolute;
+  z-index: 10;
+  display: block;
+}
+
+.h-hero__star--tl { left: 254px; top: 102px; }
+.h-hero__star--tr { left: 1709px; top: 97px; }
+.h-hero__star--bl { left: 250px; top: 948px; }
+.h-hero__star--br { left: 1710px; top: 949px; }
+
+.h-hero__brand {
+  position: absolute;
+  z-index: 11;
+  left: 52px;
+  top: 19px;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 6.285px;
+  font-weight: 700;
+  font-size: 39.245px;
+  line-height: normal;
+}
+
+.h-hero__brand img {
+  display: block;
+  width: 23.044px;
+  height: 43.145px;
+}
+
+.h-hero__menu {
+  position: absolute;
+  z-index: 11;
+  left: 1748px;
+  top: 39px;
+  display: flex;
+  align-items: center;
+  gap: 19px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: #fff;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 1.183;
+  letter-spacing: 4.8px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.h-hero__menu img {
+  display: block;
+  width: 32px;
+  height: 32px;
+}
+
+.h-hero__menu:hover span,
+.h-hero__menu:focus-visible span {
+  color: var(--orange);
+}
+
+.h-hero__menu:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 6px;
+}
+
+.h-hero__title {
+  margin: 0;
+  font-weight: 400;
+}
+
+.h-hero__slogan {
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  gap: 50.607px;
+  color: var(--orange-line);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 197.506px;
+  line-height: normal;
+  white-space: nowrap;
+}
+
+.h-hero__slogan--one { left: 198px; top: 40px; }
+.h-hero__slogan--step { left: 376px; top: 280px; }
+
+.h-hero__zh {
+  position: absolute;
+  color: #fff;
+  font-weight: 900;
+  font-size: 90.449px;
+  line-height: normal;
+  white-space: nowrap;
+}
+
+.h-hero__zh--go { z-index: 2; left: 788px; top: 175px; }
+.h-hero__zh--play { z-index: 8; left: 878px; top: 406px; }
+
+/* 選手群像 */
+.h-hero__p {
+  position: absolute;
+  z-index: 3;
+  display: block;
+  max-width: none;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+.h-hero__p--1 { left: 58px; top: 61px; width: 367.245px; height: 489.66px; }
+.h-hero__p--2 { left: 266px; top: 93px; width: 530px; height: 265px; object-fit: fill; } /* 同 Figma：圖片直接填滿框（非等比） */
+.h-hero__p--3 { left: 316px; top: 376px; width: 430px; height: 574px; }
+.h-hero__p--4 { left: -64px; top: 389px; width: 354.264px; height: 472.352px; }
+.h-hero__p--5 { left: 75px; top: 533px; width: 358.861px; height: 478.482px; }
+.h-hero__p--6 { left: 920px; top: 266px; width: 351.289px; height: 468.386px; }
+.h-hero__p--7 { left: 975px; top: 413.04px; width: 416.193px; height: 554.924px; }
+.h-hero__p--8 { z-index: 5; left: 498px; top: 551px; width: 561.955px; height: 749.273px; }
+
+/* 下緣漸層（黑 → 透明） */
+.h-hero__fade {
+  position: absolute;
+  z-index: 4;
+  background: linear-gradient(to top, #000, rgba(0, 0, 0, 0));
+  pointer-events: none;
+}
+
+.h-hero__fade--1 { left: 823px; top: 692px; width: 896px; height: 263px; }
+.h-hero__fade--2 { left: -38px; top: 692px; width: 896px; height: 263px; }
+.h-hero__fade--3 { z-index: 6; left: 329px; top: 968px; width: 745px; height: 175px; }
+
+/* 手機稿專用的漸層 */
+.h-hero__fade--m1,
+.h-hero__fade--m2,
+.h-hero__fade--m3,
+.h-hero__fade--m4 {
+  display: none;
+}
+
+.h-hero__cta {
+  position: absolute;
+  z-index: 7;
+  left: 1365px;
+  top: 640px;
+  width: 344.083px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.h-hero__cta-title {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+  line-height: normal;
+  white-space: nowrap;
+}
+
+.h-hero__cta-year {
+  color: var(--orange-line);
+  font-weight: 500;
+  font-size: 47.417px;
+  letter-spacing: 10.4317px;
+}
+
+.h-hero__cta-main {
+  font-size: 41.567px;
+  letter-spacing: 5.4037px;
+}
+
+.h-hero__cta-sub {
+  color: var(--orange-line);
+  font-weight: 500;
+  font-size: 41.567px;
+  letter-spacing: 6.6507px;
+}
+
+.h-hero__cta-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 9.237px 55px;
+  border-radius: 999px;
+  background: var(--orange-line);
+  font-weight: 700;
+  font-size: 32.33px;
+  line-height: normal;
+  letter-spacing: 8.0825px;
+  white-space: nowrap;
+}
+
+/* 卡包（Figma V0085，旋轉 14.6°） */
+.h-hero__pack {
+  position: absolute;
+  z-index: 9;
+  left: 1356px;
+  top: -39px;
+  width: 466px;
+  height: 828px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.h-hero__pack-inner {
+  flex-shrink: 0;
+  width: 335.68px;
+  height: 737.08px;
+  transform: rotate(14.6deg);
+}
+
+.h-hero__pack-inner img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.h-hero__mos {
+  position: absolute;
+  z-index: 1;
+  left: 1739px;
+  top: 998px;
+  width: 161.462px;
+  height: 46.644px;
+}
+
+/* 消息快訊 */
+.h-news {
+  position: absolute;
+  z-index: 11;
+  left: 95px;
+  top: 857px;
+  width: 472px;
+  height: 97px;
+}
+
+.h-news__tag {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 0 8px;
+  border-radius: 999px;
+  background: #ea5504;
+  font-family: var(--font-latin);
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: -0.352px;
+  white-space: nowrap;
+}
+
+.h-news__box {
+  position: absolute;
+  top: 31px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 2px solid #fff;
+  border-radius: 40px;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.h-news__title,
+.h-news__date {
+  position: absolute;
+  left: 22px;
+  margin: 0;
+  font-size: 18px;
+  line-height: normal;
+  white-space: nowrap;
+}
+
+.h-news__title {
+  top: 6px;
+  font-weight: 500;
+}
+
+.h-news__date {
+  top: 31px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #d6d6d6;
+}
+
+.h-news__date img {
+  display: block;
+}
+
+.h-news__arrows {
+  position: absolute;
+  left: 390px;
+  top: 20px;
+  display: flex;
+  gap: 11px;
+}
+
+.h-news__arrows img {
+  display: block;
+}
+
+.h-news__prev {
+  transform: rotate(180deg);
+}
+
+/* ---------- 主視覺進場（html.js-reveal 時才隱藏；.h-hero.is-in 後依 --d 依序播放；
+  選手照與卡包 .h-seq 由 js/home.js 依畫面位置（上→下、左→右）載入完成後逐張加上 .is-shown） ---------- */
+
+html.js-reveal .h-in {
+  opacity: 0;
+  transform: translateY(40px);
+  transition:
+    opacity 0.9s ease,
+    transform 1s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition-delay: calc(var(--d, 0) * 110ms);
+}
+
+html.js-reveal .h-in--fade {
+  transform: none;
+}
+
+html.js-reveal .h-in--photo {
+  transform: translateY(24px) scale(1.04);
+}
+
+html.js-reveal .h-in--pack {
+  transform: translate(60px, -40px) rotate(8deg);
+}
+
+html.js-reveal .h-in--x {
+  opacity: 1;
+  transform: scaleX(0);
+  transition: transform 1.1s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+html.js-reveal .h-in--y {
+  opacity: 1;
+  transform: scaleY(0);
+  transition: transform 1.1s cubic-bezier(0.65, 0, 0.35, 1);
+  transition-delay: calc(var(--d, 0) * 110ms);
+}
+
+html.js-reveal .h-hero.is-in .h-in:not(.h-seq),
+html.js-reveal .h-hero .h-seq.is-shown {
+  opacity: 1;
+  transform: none;
+}
+
+/* ================= 共用區塊標題（Figma Section Header） ================= */
+
+.h-head {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.h-head__eyebrow {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--orange-line);
+  font-weight: 700;
+  font-size: 16px;
+  line-height: normal;
+  letter-spacing: 0.48px;
+  white-space: nowrap;
+}
+
+.h-head__eyebrow::before {
+  content: "";
+  width: 12px;
+  height: 3px;
+  background: var(--orange-line);
+}
+
+.h-head__titles {
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 24px;
+  line-height: normal;
+  white-space: nowrap;
+}
+
+.h-head__en {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 48px;
+  letter-spacing: 0.48px;
+}
+
+.h-head__zh {
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 900;
+  font-size: 28px;
+}
+
+/* ================= DRAW THE ELITES ================= */
+
+.h-draw {
+  position: relative;
+  height: calc(1002px * var(--s));
+  overflow: hidden;
+  background: var(--section-bg);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.h-draw__stage {
+  height: 1002px;
+}
+
+.h-draw__grid {
+  top: -41px;
+  left: 0;
+  width: 1920px;
+  height: 1080px;
+}
+
+.h-draw__head {
+  position: absolute;
+  left: 240px;
+  top: 120px;
+}
+
+.h-draw__deck {
+  position: absolute;
+  left: 240px;
+  top: 282px;
+  width: 593px;
+  height: 440px;
+}
+
+/* 沿用關於運動員卡頁的卡包展示（css/page.css .hero__deck），此處改由外層定位 */
+.h-draw .hero__deck {
+  left: 0;
+  top: 0;
+}
+
+.h-draw__text {
+  position: absolute;
+  left: 913px;
+  top: 323px;
+  width: 767px;
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+}
+
+.h-draw__name {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.h-draw__year {
+  color: var(--orange-line);
+  font-size: 47.417px;
+  letter-spacing: 10.4317px;
+}
+
+.h-draw__main {
+  font-size: 52px;
+  letter-spacing: 6.76px;
+}
+
+.h-draw__sub {
+  color: var(--orange-line);
+  font-weight: 700;
+  font-size: 52px;
+  letter-spacing: 8.32px;
+}
+
+.h-draw__desc h3,
+.h-nfc__text h3 {
+  margin: 0 0 16px;
+  font-weight: 900;
+  font-size: 36px;
+  line-height: normal;
+  white-space: nowrap;
+}
+
+.h-draw__desc p,
+.h-nfc__text p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+.h-draw__desc p {
+  width: 640px;
+}
+
+.h-buy {
+  position: absolute;
+  left: 240px;
+  top: 782px;
+  width: 1440px;
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+}
+
+.h-buy__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 48px;
+  line-height: normal;
+  letter-spacing: 0.48px;
+  white-space: nowrap;
+}
+
+.h-buy__card {
+  flex: 1 0 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 32px;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 2px;
+}
+
+.h-buy__pill {
+  width: 93px;
+  height: 50px;
+  border-radius: 999px;
+  background: linear-gradient(to bottom, #e95623, #eead22);
+}
+
+.h-buy__card h4 {
+  margin: 0;
+  font-weight: 900;
+  font-size: 40px;
+  line-height: normal;
+}
+
+.h-buy__card p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.h-draw__square {
+  position: absolute;
+  width: 40px;
+  height: 43px;
+  background: var(--orange-line);
+}
+
+.h-draw__square--1 { left: 200px; top: 756px; }
+.h-draw__square--2 { left: 1601px; top: 476px; }
+
+/* ================= TAIWAN ================= */
+
+.h-tw {
+  position: relative;
+  height: calc(637px * var(--s));
+  overflow: hidden;
+  background: var(--section-bg);
+}
+
+.h-tw__stage {
+  height: 637px;
+}
+
+.h-tw__stage::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1920px;
+  height: 2px;
+  background: url("../assets/line-h.svg") repeat-x;
+}
+
+.h-tw__grid {
+  top: 0;
+  left: 0;
+  width: 1920px;
+  height: 1080px;
+}
+
+/* 字樣由上往下拉開：js/home.js 依捲動設定 scaleY（0 → 1） */
+.h-tw__word {
+  position: absolute;
+  left: 213px;
+  top: 84px;
+  width: 1460px;
+  height: 491px;
+  transform-origin: center top;
+}
+
+html.js-reveal .h-tw__word {
+  transform: scaleY(0);
+}
+
+.h-tw__word img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* 墜落卡片起點（Figma「林郁婷 6」：263.068 × 368.295，中心 959.62, 305.69） */
+.h-tw__anchor {
+  position: absolute;
+  left: 828.09px;
+  top: 121.54px;
+  width: 263.068px;
+  height: 368.295px;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* 墜落中的卡片：位置、大小、角度、透明度與翻面角度由 js/home.js 設定 */
+.h-faller {
+  position: absolute;
+  z-index: 3;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  visibility: hidden;
+  perspective: 1400px;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+.h-faller__inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+}
+
+/* 正面（王齊麟）與卡背，翻轉時以 backface-visibility 切換 */
+.h-faller__front,
+.h-faller__back {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 6%/4.3%;
+  object-fit: cover;
+  backface-visibility: hidden;
+  box-shadow:
+    -10px -10px 100px 0 rgba(255, 255, 255, 0.33),
+    2px 3px 0 0 #f4f3ff,
+    20px 25px 100px 0 rgba(255, 210, 89, 0.4);
+}
+
+.h-faller__back {
+  transform: rotateY(180deg);
+}
+
+/* ================= THE CHAMPIONS ================= */
+
+.h-champ {
+  position: relative;
+  padding-top: calc(937px * var(--s));
+  padding-bottom: calc(120px * var(--s));
+  background: var(--section-bg);
+}
+
+.h-champ__stage {
+  height: 937px;
+}
+
+.h-champ__stage::before {
+  content: "";
+  position: absolute;
+  top: 29px;
+  left: 0;
+  width: 1920px;
+  height: 2px;
+  background: url("../assets/line-h.svg") repeat-x;
+}
+
+.h-champ__grid {
+  top: 0;
+  left: 0;
+  width: 1920px;
+  height: 1080px;
+}
+
+.h-champ__head {
+  position: absolute;
+  left: 240px;
+  top: 120px;
+}
+
+.h-fan-wrap {
+  position: absolute;
+  left: 240px;
+  top: 282px;
+  width: 933px;
+  height: 655px;
+}
+
+.h-fan {
+  position: relative;
+  width: 933px;
+  height: 655px;
+}
+
+/* 疊卡（Figma 299.72 × 419.609，以中心點定位後旋轉） */
+.h-fan__card {
+  position: absolute;
+  display: block;
+  width: 299.72px;
+  height: 419.609px;
+  border-radius: 16px;
+  object-fit: cover;
+  box-shadow:
+    -10px -10px 100px 0 rgba(255, 255, 255, 0.33),
+    2px 3px 0 0 #f4f3ff,
+    20px 25px 100px 0 rgba(255, 210, 89, 0.4);
+}
+
+/* 後排卡片疊 30% 黑 */
+.h-fan__card--dim {
+  filter: brightness(0.7);
+}
+
+.h-fan__card--7 { left: 619.27px; top: 52.95px; transform: rotate(4deg); }
+.h-fan__card--6 { left: 577.27px; top: 32.95px; transform: rotate(4deg); }
+.h-fan__card--2 { left: 320.27px; top: 12.95px; transform: rotate(-4deg); }
+.h-fan__card--3 { left: 509.27px; top: 13.43px; transform: rotate(4deg); }
+.h-fan__card--5 { left: 412.7px; top: 13.43px; }
+
+.h-fan__card--8 {
+  left: 78.88px;
+  top: 140.97px;
+  width: 333.433px;
+  height: 466.807px;
+  transform: rotate(-23.36deg);
+}
+
+/* 終點卡片：墜落卡片抵達前先隱藏（js/home.js 切換） */
+.h-fan__card--5.is-waiting {
+  visibility: hidden;
+}
+
+.h-nfc__badge {
+  position: absolute;
+  left: 1330px;
+  top: 363px;
+  width: 208px;
+  height: 208px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 24px;
+  border: 10px solid var(--orange-line);
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+/* iconoir:hand-contactless（24 格，寬 140） */
+.h-nfc__icon {
+  position: relative;
+  flex-shrink: 0;
+  width: 140px;
+  height: 140px;
+  margin-bottom: -30px;
+}
+
+.h-nfc__icon img {
+  position: absolute;
+  display: block;
+}
+
+.h-nfc__i1 { top: 23.96%; right: 36.31%; bottom: 15.63%; left: 5.21%; width: 58.48%; height: 60.41%; }
+.h-nfc__i2 { top: 17.71%; right: 5.21%; bottom: 34.38%; left: 30.21%; width: 64.58%; height: 47.91%; }
+.h-nfc__i3 { top: 30.21%; right: 19.27%; bottom: 46.87%; left: 63.54%; width: 17.19%; height: 22.92%; }
+
+.h-nfc__label {
+  color: var(--orange-line);
+  font-family: var(--font-latin);
+  font-weight: 700;
+  font-size: 52px;
+  line-height: normal;
+}
+
+.h-nfc__text {
+  position: absolute;
+  left: 1256px;
+  top: 607px;
+  width: 377px;
+}
+
+/* 球員卡（沿用 css/page.css 的卡片格線，電腦版 2 列 × 6 張） */
+.h-champ__panel {
+  position: relative;
+  z-index: 2; /* 放大的卡片蓋過虛線與墜落卡片 */
+  width: calc(1390px * var(--s));
+  margin-left: calc(50% - 720px * var(--s));
+  padding: calc(16px * var(--s));
+  background: #000;
+  transform-style: preserve-3d;
+}
+
+.h-champ .card-grid {
+  grid-template-columns: repeat(6, 1fr);
+  gap: calc(40px * var(--s)) calc(22px * var(--s));
+}
+
+/* 頁面裝飾虛線（主視覺以下，x = 199 / 1721） */
+.h-lines {
+  position: absolute;
+  z-index: 1;
+  top: calc(1080px * var(--s));
+  bottom: 0;
+  left: 0;
+  right: 0;
+  pointer-events: none;
+}
+
+.h-lines::before,
+.h-lines::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: repeating-linear-gradient(to bottom, var(--orange-line) 0 4px, transparent 4px 8px);
+}
+
+.h-lines::before { left: calc(50% - 761px * var(--s) - 1px); }
+.h-lines::after { left: calc(50% + 761px * var(--s) - 1px); }
+
+/* 疊卡只淡入（不位移），墜落卡片的終點位置才不會跟著動 */
+html.js-reveal .reveal.reveal--fade {
+  transform: none;
+}
+
+/* ================= 主選單 ================= */
+
+.h-menu {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: #000;
+}
+
+.h-menu__grid {
+  inset: 0;
+  position: fixed;
+}
+
+.h-menu__bar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 107px;
+  padding: 0 clamp(20px, 2.7vw, 52px);
+}
+
+.h-menu__bar::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  background: url("../assets/line-h.svg") repeat-x;
+}
+
+.h-menu__brand {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
+  font-size: clamp(24px, 2vw, 39px);
+  line-height: normal;
+}
+
+.h-menu__brand img {
+  display: block;
+  width: auto;
+  height: 1.1em;
+}
+
+/* 關閉鈕（同搜尋彈窗） */
+.h-menu__close {
+  position: relative;
+  width: 55px;
+  height: 40px;
+  padding: 0;
+  border: 2px solid var(--orange-line);
+  background: transparent;
+  cursor: pointer;
+}
+
+.h-menu__close span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 24px;
+  height: 2.4px;
+  border-radius: 40px;
+  background: #fff;
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.h-menu__close span + span {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.h-menu__close:focus-visible,
+.h-menu__item:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 3px;
+}
+
+.h-menu__nav {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  padding: 48px clamp(20px, 10.4vw, 200px);
+}
+
+.h-menu__nav ul {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.h-menu__nav li {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.h-menu__item {
+  display: flex;
+  align-items: baseline;
+  gap: clamp(16px, 2vw, 40px);
+  padding: clamp(16px, 2vw, 28px) 0;
+  color: #fff;
+  text-decoration: none;
+  line-height: normal;
+}
+
+.h-menu__no {
+  flex-shrink: 0;
+  width: 2.5em;
+  color: var(--orange-line);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(16px, 1.25vw, 24px);
+  letter-spacing: 2px;
+}
+
+.h-menu__zh {
+  font-weight: 900;
+  font-size: clamp(28px, 3.1vw, 60px);
+  letter-spacing: 0.06em;
+}
+
+.h-menu__en {
+  margin-left: auto;
+  color: rgba(255, 255, 255, 0.45);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(14px, 1.25vw, 24px);
+  letter-spacing: 0.2em;
+}
+
+/* 唯一可點的項目：滑過變橘 */
+a.h-menu__item {
+  cursor: pointer;
+}
+
+a.h-menu__item .h-menu__zh::after {
+  content: "→";
+  display: inline-block;
+  margin-left: 0.4em;
+  color: var(--orange-line);
+  transition: transform 0.2s ease;
+}
+
+a.h-menu__item:hover .h-menu__zh,
+a.h-menu__item:focus-visible .h-menu__zh {
+  color: var(--orange);
+}
+
+a.h-menu__item:hover .h-menu__zh::after,
+a.h-menu__item:focus-visible .h-menu__zh::after {
+  transform: translateX(8px);
+}
+
+.h-menu__site {
+  position: relative;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 24px clamp(20px, 2.7vw, 52px) 32px;
+  line-height: normal;
+}
+
+.h-menu__site-zh {
+  font-weight: 900;
+  font-size: 19px;
+  letter-spacing: 1.14px;
+}
+
+.h-menu__site-en {
+  color: #a2968a;
+  font-family: var(--font-latin);
+  font-size: 10px;
+  letter-spacing: 2.2px;
+}
+
+/* ================= 手機版（< 768px） ================= */
+@media (max-width: 767px) {
+  /* ---------- 主視覺：375 × 762 手機稿，依 --ms 縮放 ---------- */
+
+  .h-hero {
+    height: calc(762px * var(--ms));
+  }
+
+  .h-hero__stage {
+    left: 0;
+    width: 375px;
+    height: 762px;
+    transform: scale(var(--ms));
+    transform-origin: top left;
+  }
+
+  .h-hero__grid {
+    top: 0;
+    left: -400.44px;
+    width: 1176.89px;
+    height: 662px;
+    background-size: 24.52px 24.52px;
+  }
+
+  .h-hero__line--top,
+  .h-hero__line--bottom {
+    width: 375px;
+    height: 1px;
+    background-size: auto 100%;
+  }
+
+  .h-hero__line--top { top: 121.6px; }
+  .h-hero__line--bottom { top: 456.6px; }
+
+  .h-hero__line--left,
+  .h-hero__line--right {
+    width: 1px;
+    height: 762px;
+  }
+
+  .h-hero__line--left { left: 34.3px; }
+  .h-hero__line--right { left: 340.3px; }
+
+  .h-hero__star--tl { left: 32.2px; top: 119.4px; width: 4.49px; height: 4.49px; }
+  .h-hero__star--tr { left: 336.5px; top: 117.9px; width: 8.56px; height: 8.56px; }
+  .h-hero__star--bl { left: 31px; top: 452.7px; width: 8.56px; height: 8.56px; }
+  .h-hero__star--br { left: 336.1px; top: 452.5px; width: 8.56px; height: 8.56px; }
+
+  .h-hero__brand {
+    z-index: 20;
+    left: 14px;
+    top: 12px;
+    gap: 3px;
+    font-size: 18px;
+  }
+
+  .h-hero__brand img {
+    width: 10.6px;
+    height: 19.8px;
+  }
+
+  .h-hero__menu {
+    z-index: 20;
+    left: 331px;
+    top: 8px;
+    padding: 4px;
+  }
+
+  .h-hero__menu span {
+    display: none;
+  }
+
+  .h-hero__slogan {
+    font-size: 70.449px;
+    gap: 18.051px;
+  }
+
+  .h-hero__slogan--one { z-index: 3; left: 51.26px; top: 106.8px; }
+
+  .h-hero__slogan--step {
+    z-index: 8;
+    left: 51.26px;
+    top: 211.33px;
+    gap: 23.192px;
+    font-size: 90.513px;
+  }
+
+  .h-hero__zh { font-size: 24.321px; }
+  .h-hero__zh--go { z-index: 5; left: 233px; top: 197px; }
+  .h-hero__zh--play { z-index: 8; left: 235.1px; top: 322.98px; font-size: 24.477px; }
+
+  .h-hero__p--1 { z-index: 1; left: 28.2px; top: -4px; width: 151.643px; height: 202.191px; }
+  .h-hero__p--2 { z-index: 1; left: 141px; top: 46px; width: 103.85px; height: 138.467px; }
+  .h-hero__p--3 { z-index: 4; left: 99.83px; top: 122px; width: 240.865px; height: 321.153px; }
+  .h-hero__p--4 { z-index: 6; left: -22.18px; top: 168.76px; width: 146.283px; height: 195.044px; }
+  .h-hero__p--5 { z-index: 9; left: 35.22px; top: 228.22px; width: 148.182px; height: 197.576px; }
+  .h-hero__p--6 { z-index: 11; left: -71.13px; top: 323px; width: 237.403px; height: 316.538px; }
+  .h-hero__p--7 { display: none; } /* 手機稿中位於畫面外 */
+  .h-hero__p--8 { z-index: 12; left: 209px; top: 377.5px; width: 244.662px; height: 326.216px; }
+
+  /* 手機稿水平翻轉的兩張 */
+  .h-hero__p--3,
+  .h-hero__p--8 {
+    scale: -1 1;
+  }
+
+  .h-hero__fade--1,
+  .h-hero__fade--2,
+  .h-hero__fade--3 {
+    display: none;
+  }
+
+  .h-hero__fade--m1,
+  .h-hero__fade--m2,
+  .h-hero__fade--m3,
+  .h-hero__fade--m4 {
+    display: block;
+  }
+
+  .h-hero__fade--m1 { z-index: 2; left: 37px; top: 107px; width: 239px; height: 116px; }
+  .h-hero__fade--m2 { z-index: 7; left: -26.46px; top: 214.9px; width: 159.907px; height: 116.133px; }
+  .h-hero__fade--m3 { z-index: 10; left: 8px; top: 319px; width: 331px; height: 84px; }
+  .h-hero__fade--m4 { z-index: 13; left: -10px; top: 443px; width: 388px; height: 296px; }
+
+  .h-hero__cta {
+    z-index: 14;
+    left: 205px;
+    top: 477px;
+    width: 149px;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .h-hero__cta-title {
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .h-hero__cta-year { font-size: 20.533px; letter-spacing: 4.5173px; }
+  .h-hero__cta-main { font-size: 18px; letter-spacing: 2.34px; }
+  .h-hero__cta-sub { font-size: 18px; letter-spacing: 2.88px; }
+
+  .h-hero__cta-btn {
+    padding: 4px 24px;
+    font-size: 14px;
+    letter-spacing: 3.5px;
+  }
+
+  .h-hero__pack {
+    z-index: 15;
+    left: -25px;
+    top: 273px;
+    width: 324.171px;
+    height: 451.572px;
+  }
+
+  .h-hero__pack-inner {
+    width: 229px;
+    height: 407px;
+  }
+
+  .h-hero__mos {
+    display: none;
+  }
+
+  .h-news {
+    z-index: 16;
+    left: 31px;
+    top: 633px;
+    width: 323px;
+  }
+
+  .h-news__arrows {
+    display: none;
+  }
+
+  /* ---------- 其餘區塊：直向排版 ---------- */
+
+  .h-draw__stage,
+  .h-tw__stage,
+  .h-champ__stage {
+    position: relative;
+    left: auto;
+    width: auto;
+    height: auto;
+    transform: none;
+  }
+
+  .h-draw__grid,
+  .h-tw__grid,
+  .h-champ__grid {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: 24px 24px;
+  }
+
+  .h-head {
+    position: relative;
+    left: auto;
+    top: auto;
+    gap: 8px;
+  }
+
+  .h-head__eyebrow {
+    font-size: 12px;
+  }
+
+  .h-head__titles {
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .h-head__en { font-size: 32px; }
+  .h-head__zh { font-size: 18px; }
+
+  .h-draw {
+    height: auto;
+  }
+
+  .h-draw__stage {
+    padding: 48px 16px 40px;
+  }
+
+  .h-draw__deck {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: 100%;
+    height: calc(440px * 0.55 * var(--ms));
+    margin: 64px 0 16px;
+  }
+
+  .h-draw .hero__deck {
+    left: 50%;
+    margin: 0;
+    transform: translateX(-50%) scale(calc(0.55 * var(--ms)));
+    transform-origin: top center;
+  }
+
+  .h-draw__text {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: auto;
+    gap: 24px;
+  }
+
+  .h-draw__year { font-size: 28px; letter-spacing: 6px; }
+  .h-draw__main { font-size: 30px; letter-spacing: 4px; }
+  .h-draw__sub { font-size: 30px; letter-spacing: 5px; }
+
+  .h-draw__desc h3,
+  .h-nfc__text h3 {
+    margin-bottom: 8px;
+    font-size: 22px;
+    white-space: normal;
+  }
+
+  .h-draw__desc p,
+  .h-nfc__text p {
+    width: auto;
+    font-size: 15px;
+  }
+
+  .h-buy {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: auto;
+    margin-top: 40px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+
+  .h-buy__title {
+    font-size: 32px;
+  }
+
+  .h-buy__card {
+    flex: none;
+    gap: 10px;
+    padding: 20px;
+  }
+
+  .h-buy__pill {
+    width: 60px;
+    height: 32px;
+  }
+
+  .h-buy__card h4 {
+    font-size: 26px;
+  }
+
+  .h-buy__card p {
+    font-size: 14px;
+  }
+
+  .h-draw__square {
+    display: none;
+  }
+
+  .h-tw {
+    height: auto;
+  }
+
+  .h-tw__stage {
+    padding: 48px 16px;
+  }
+
+  .h-tw__stage::before,
+  .h-champ__stage::before {
+    width: 100%;
+  }
+
+  .h-tw__word {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1460 / 491;
+  }
+
+  /* 手機版卡片放大些（寬約為字樣的 30%），中心同電腦版比例 */
+  .h-tw__anchor {
+    left: calc(16px + (100% - 32px) * 0.511);
+    top: calc(48px + (100% - 32px) * 0.3365 * 0.4515);
+    width: calc((100% - 32px) * 0.3);
+    height: auto;
+    aspect-ratio: 263.068 / 368.295;
+    transform: translate(-50%, -50%);
+  }
+
+  .h-champ {
+    padding: 0 0 60px;
+  }
+
+  .h-champ__stage {
+    padding: 48px 16px 32px;
+  }
+
+  .h-fan-wrap {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: 100%;
+    height: calc(655px * 0.3676 * var(--ms));
+    margin-top: 32px;
+  }
+
+  .h-fan,
+  html.js-reveal .h-fan.reveal--fade {
+    transform: scale(calc(0.3676 * var(--ms)));
+    transform-origin: top left;
+  }
+
+  .h-nfc {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 32px;
+  }
+
+  .h-nfc__badge {
+    position: relative;
+    left: auto;
+    top: auto;
+    flex-shrink: 0;
+    width: 96px;
+    height: 96px;
+    padding: 0 10px;
+    border-width: 5px;
+  }
+
+  .h-nfc__icon {
+    width: 64px;
+    height: 64px;
+    margin-bottom: -14px;
+  }
+
+  .h-nfc__label {
+    font-size: 24px;
+  }
+
+  .h-nfc__text {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: auto;
+  }
+
+  .h-champ__panel {
+    width: auto;
+    margin: 0 16px;
+    padding: 16px;
+  }
+
+  .h-champ .card-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px 12px;
+  }
+
+  /* 首頁 12 張全部顯示（關於運動員卡頁手機版只顯示 9 張） */
+  .h-champ .card-cell:nth-child(n + 10) {
+    display: grid;
+  }
+
+  .h-lines {
+    display: none;
+  }
+
+  .h-menu__bar {
+    min-height: 64px;
+  }
+
+  .h-menu__item {
+    flex-wrap: wrap;
+    row-gap: 4px;
+  }
+
+  .h-menu__en {
+    width: 100%;
+    margin-left: 56px; /* 編號寬 40 + 間距 16 */
+    font-size: 12px;
+  }
+}
