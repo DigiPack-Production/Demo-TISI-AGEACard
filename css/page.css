@@ -32,6 +32,11 @@ body {
   background: #000;
 }
 
+/* 捲軸：橘色捲動塊、黑色軌道（scrollbar-color 會繼承，下拉選單與搜尋彈窗一併套用） */
+html {
+  scrollbar-color: var(--orange) #000;
+}
+
 body {
   font-family: var(--font-body);
   color: #fff;
@@ -709,14 +714,8 @@ body.is-modal-open {
 .footer__bottom {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   gap: 16px;
-}
-
-.footer__badge {
-  display: block;
-  flex-shrink: 0;
-  object-fit: cover;
 }
 
 .footer__copy {
